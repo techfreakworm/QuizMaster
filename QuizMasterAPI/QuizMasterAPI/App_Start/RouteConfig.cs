@@ -12,7 +12,18 @@ namespace QuizMasterAPI
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "Login",
+                //url: "Users/Login/{UserName}/{UserPassword}",
+                url: "{controller}/{action}/{UserName}/{UserPassword}",
+                defaults: new { controller = "Users", action = "Login",
+                    UserName = UrlParameter.Optional, UserPassword = UrlParameter.Optional}
+            );
+            routes.MapRoute(
+                name: "RandomQuestions",
+                url: "{controller}/{action}"
+                //defaults: new { controller = "Questions", action = "RandomQuestion" }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
