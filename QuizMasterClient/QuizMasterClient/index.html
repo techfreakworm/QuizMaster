@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+
+	<!-- Include Bootstrap library-->
+	<link rel="stylesheet" type="text/css" href="Content/bootstrap.css">
+
+	<!-- Custom CSS files-->
+	<link rel="stylesheet" type="text/css" href="Style/login.css">
+
+	<!-- Include JS library -->
+	<script src="Scripts/Shared/angular.js"></script>
+
+	<!-- Modules -->
+	<script src="Scripts/app.js"></script>
+
+	<!-- Controllers -->
+	<script src="Scripts/Controllers/loginController.js"></script>
+</head>
+<body id="login" ng-app="QuizMaster" ng-controller="loginController">
+
+	<div class="container">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail">Cybergroup Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="email" autofocus>
+        <p class="login-error-message">{{ emailMessage }}</p>
+        <label for="inputPassword">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="password" ng-model-options="{ getterSetter: true }" required>
+        <p class="login-error-message">{{ passwordMessage }} </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="loginSubmit()">Sign in</button>
+      </form>
+
+      <p>{{ email }}</p>
+      <p>{{ password }}</p>
+    </div> <!-- /container -->
+
+
+
+	
+
+</body>
+</html>
