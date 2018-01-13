@@ -14,14 +14,17 @@ using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    [RoutePrefix("api/user")]
+
     public class UsersController : ApiController
     {
         private QuizMasterDbContext db = new QuizMasterDbContext();
 
         // GET: api/Users
-        public IQueryable<User> GetUser(User user)
+        [Route("{currentUser}")]
+        public IQueryable<User> GetUser(User currentUser)
         {
-            if (user.UserType == "admin" && user.UserPass == db.User.Find(user.UserName).UserPass)
+            if (currentUser.UserType == "admin" && currentUser.UserPass == db.User.Find(currentUser.UserName).UserPass)
             {
                 return db.User;
             }
@@ -41,7 +44,8 @@ namespace QuizMasterAPI.Controllers
 
         //    return Ok(user);
         //}
-
+        [HttpGet]
+        [Route("login/{UserName}/{Password}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult Login(String UserName,String Password)
         {
@@ -59,6 +63,7 @@ namespace QuizMasterAPI.Controllers
         }
 
         // PUT: api/Users/5
+        [Route("{id}/{user}/{currentUser}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(int id, User user,User currentUser)
         {
@@ -98,6 +103,7 @@ namespace QuizMasterAPI.Controllers
         }
 
         // POST: api/Users
+        [Route("{user}/{currentUser}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user, User currentUser)
         {
@@ -117,6 +123,7 @@ namespace QuizMasterAPI.Controllers
         }
 
         // DELETE: api/Users/5
+        [Route("{id}/{currentuser}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult DeleteUser(int id, User currentUser)
         {

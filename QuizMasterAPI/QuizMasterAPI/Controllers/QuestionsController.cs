@@ -13,12 +13,13 @@ using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    [RoutePrefix("api/question")]
     public class QuestionsController : ApiController
     {
         private QuizMasterDbContext db = new QuizMasterDbContext();
         Random rnd = new Random();
-        List<int> ignoreRand = new List<int> { };
-
+        static List<int> ignoreRand = new List<int> { };
+        [Route("{currentUser}")]
         // GET: api/Questions
         public IQueryable<Question> GetQuestions(User currentUser)
         {
@@ -43,6 +44,7 @@ namespace QuizMasterAPI.Controllers
         //}
 
         // PUT: api/Questions/5
+        [Route("{id}/{question}/{currentUser}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutQuestion(int id, Question question, User currentUser)
         {
@@ -82,6 +84,7 @@ namespace QuizMasterAPI.Controllers
         }
 
         // POST: api/Questions
+        [Route("{question}/{currentUser}")]
         [ResponseType(typeof(Question))]
         public IHttpActionResult PostQuestion(Question question, User currentUser)
         {
@@ -101,6 +104,7 @@ namespace QuizMasterAPI.Controllers
         }
 
         // DELETE: api/Questions/5
+        [Route("{id}/{currentUser}")]
         [ResponseType(typeof(Question))]
         public IHttpActionResult DeleteQuestion(int id, User currentUser)
         {
@@ -133,14 +137,25 @@ namespace QuizMasterAPI.Controllers
         {
             return db.Questions.Count(e => e.QId == id) > 0;
         }
+        [HttpGet]
+        [Route("random/{currentUser}")]
         [ResponseType(typeof(Question))]
-        public IHttpActionResult RandomQuestion()
+        public IHttpActionResult RandomQuestion(User currentUser)
         {
+            if (!((currentUser.UserType == "presenter" || currentUser.UserType == "admin") && currentUser.UserPass == db.User.Find(currentUser.UserName).UserPass))
+            {
+                return null; ;
+            }
             int total = db.Questions.Count();
-            int id = rnd.Next(1, total);
+            int id = rnd.Next(0, total);
+            int counter = 0;
             while (ignoreRand.Contains(id))
             {
-                id = rnd.Next(1, total);
+                if (counter < total)
+                    counter++;
+                else
+                    return null;
+                id = rnd.Next(0, total);
             }
             Question question = db.Questions.OrderBy(x => x.QId).Skip(id).FirstOrDefault();
             ignoreRand.Add(id);
