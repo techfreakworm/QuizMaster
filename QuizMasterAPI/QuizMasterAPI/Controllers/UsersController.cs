@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
 using QuizMasterAPI;
@@ -41,21 +42,28 @@ namespace QuizMasterAPI.Controllers
 
         //    return Ok(user);
         //}
-        [HttpGet]
-        [ResponseType(typeof(User))]
-        public IHttpActionResult Login(String UserName,String Password)
+
+        public IHttpActionResult Login(User user)
         {
-            User user = (User) db.User.Where(a => a.UserName.Equals(UserName));
-            if (user == null)
+            User foundUser = db.User.Where(a => a.UserName.Equals(user.UserName)).FirstOrDefault();
+            if (foundUser == null)
             {
                 return NotFound();
             }
-            else if(!user.UserPass.Equals(Password))
+            else if (foundUser != null && user.UserPass.Equals(foundUser.UserPass))
             {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Password Incorrect"));
+                if (foundUser.UserType.Equals("admin"))
+                {
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "Admin Found, redirect to admin page!"));
+                }
+                else if (foundUser.UserType.Equals("presenter"))
+                {
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "Presenter Found, redirect to presenter page!"));
+                }
             }
-            
-            return Ok(user);
+            else // When user found but password incorrect
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
+            return BadRequest();
         }
 
         // PUT: api/Users/5
