@@ -10,19 +10,24 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
+using Newtonsoft.Json.Linq;
 using QuizMasterAPI;
 using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UsersController : ApiController
     {
         private QuizMasterDbContext db = new QuizMasterDbContext();
 
         // GET: api/Users
+        [HttpPost]
+        [Route("get")]
         public IQueryable<User> GetUser(User currentUser)
         {
-            if (currentUser.UserType == "admin" && currentUser.UserPass == db.User.Find(currentUser.UserName).UserPass)
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if ((foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return db.User;
             }
@@ -31,18 +36,26 @@ namespace QuizMasterAPI.Controllers
         }
 
         // GET: api/Users/5
-        //[ResponseType(typeof(User))]
-        //public IHttpActionResult GetUser(int id)
-        //{
-        //    User user = db.User.Find(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [ResponseType(typeof(User))]
+        [HttpPost]
+        [Route("get/{id}")]
+        public IHttpActionResult GetUser(int id,User currentUser)
+        {
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not authoriZed"));
+            }
+            User user = db.User.Find(id);
+           
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(user);
-        //}
-
+            return Ok(user);
+        }
+        [Route("login")]
         public IHttpActionResult Login(User user)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(user.UserName)).FirstOrDefault();
@@ -52,27 +65,29 @@ namespace QuizMasterAPI.Controllers
             }
             else if (foundUser != null && user.UserPass.Equals(foundUser.UserPass))
             {
-                if (foundUser.UserType.Equals("admin"))
-                {
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "Admin Found, redirect to admin page!"));
-                }
-                else if (foundUser.UserType.Equals("presenter"))
-                {
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "Presenter Found, redirect to presenter page!"));
-                }
+               
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, foundUser));
+                
+              
             }
             else // When user found but password incorrect
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
-            return BadRequest();
+
         }
 
         // PUT: api/Users/5
+        [Route("{id}")]
+        [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user,User currentUser)
+        public IHttpActionResult PutUser(int id,JObject jdata)
         {
-            if (!(currentUser.UserType == "admin" && currentUser.UserPass == db.User.Find(currentUser.UserName).UserPass))
+            dynamic JsonData = jdata;
+            User currentUser = JsonData.currentUser.ToObject<User>();
+            User user = JsonData.user.ToObject<User>();
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
-                return null; ;
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not authoriZed"));
             }
             if (!ModelState.IsValid)
             {
@@ -102,16 +117,21 @@ namespace QuizMasterAPI.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "User Updated"));
         }
 
         // POST: api/Users
+        [Route("")]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user, User currentUser)
+        public IHttpActionResult PostUser(JObject jdata)
         {
-            if (!(currentUser.UserType == "admin" && user.UserPass == db.User.Find(currentUser.UserName).UserPass))
+            dynamic JsonData = jdata;
+            User currentUser = JsonData.currentUser.ToObject<User>();
+            User user = JsonData.user.ToObject<User>();
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
-                return null; ;
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized")); ; 
             }
             if (!ModelState.IsValid)
             {
@@ -120,15 +140,16 @@ namespace QuizMasterAPI.Controllers
 
             db.User.Add(user);
             db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
+            return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New User Added"));
         }
 
         // DELETE: api/Users/5
+         [Route("{id}")]
         [ResponseType(typeof(User))]
         public IHttpActionResult DeleteUser(int id, User currentUser)
         {
-            if (!(currentUser.UserType == "admin" && currentUser.UserPass == db.User.Find(currentUser.UserName).UserPass))
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return null; ;
             }
