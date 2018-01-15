@@ -67,8 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Scripts\Controllers\adminPortalController.js" />
+    <Content Include="Scripts\Shared\angular-cookies.js" />
+    <Content Include="Scripts\Shared\angular-cookies.min.js" />
+    <Content Include="Scripts\Shared\angular-route.js" />
+    <Content Include="Scripts\Shared\angular-route.min.js" />
     <Content Include="Scripts\Shared\angular.min.js.map" />
     <Content Include="Scripts\Shared\jquery-1.9.1.min.map" />
+    <Content Include="Scripts\Shared\angular-cookies.min.js.map" />
+    <Content Include="Scripts\Shared\angular-route.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -84,7 +91,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
     <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\Controllers\loginController.js" />
+    <Content Include="Scripts\Controllers\loginPortalController.js" />
     <Content Include="Scripts\Shared\angular-mocks.js" />
     <Content Include="Scripts\Shared\angular.js" />
     <Content Include="Scripts\Shared\angular.min.js" />
@@ -102,6 +109,7 @@
     <Content Include="Scripts\Shared\jquery-1.9.1.js" />
     <Content Include="Scripts\Shared\jquery-1.9.1.min.js" />
     <Content Include="Style\login.css" />
+    <Content Include="Views\adminPortal.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
