@@ -26,6 +26,10 @@ namespace QuizMasterAPI.Controllers
         public IQueryable<Question> GetQuestions(User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return null;
+            }
             if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             { 
                 return null;
@@ -40,6 +44,10 @@ namespace QuizMasterAPI.Controllers
         public IHttpActionResult GetQuestion(int id, User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
             if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
@@ -63,6 +71,10 @@ namespace QuizMasterAPI.Controllers
             User currentUser = JsonData.currentUser.ToObject<User>();
             Question question = JsonData.question.ToObject<Question>();
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
             if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
@@ -107,6 +119,10 @@ namespace QuizMasterAPI.Controllers
             User currentUser = JsonData.currentUser.ToObject<User>();
             Question question = JsonData.question.ToObject<Question>();
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
             if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
@@ -128,6 +144,10 @@ namespace QuizMasterAPI.Controllers
         public IHttpActionResult DeleteQuestion(int id, User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
             if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
@@ -163,7 +183,11 @@ namespace QuizMasterAPI.Controllers
         public IHttpActionResult RandomQuestion(User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
-            if (!((foundUser.UserType.Equals("admin") || (foundUser.UserType.Equals("presenter")) && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
+            if (!((foundUser.UserType.Equals("admin") || (foundUser.UserType.Equals("presenter")) && currentUser.UserPass.Equals(foundUser.UserPass))))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
