@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!--Libraries-->
+    <script src="../../Scripts/Shared/jquery-1.9.1.js"></script>
+    <script src="../../Scripts/Shared/angular.js"></script>
+    <script src="../../Scripts/Shared/bootstrap.js"></script>
+    <script src="../../Scripts/Shared/angular-cookies.js"></script>
+    <script src="../../Scripts/Shared/angular-route.js"></script>
+    <script src="../../Scripts/Shared/angular-ui-router.js"></script>
+
+    <!--Modules-->
+    <script src="../../Scripts/app.js"></script>
+
+    <!--Controllers-->
+    <script src="../../Scripts/Controllers/admin/adminPortalController.js"></script>
+    <script src="../../Scripts/Controllers/admin/homeController.js"></script>
+    <script src="../../Scripts/Controllers/admin/questionsController.js"></script>
+    <script src="../../Scripts/Controllers/admin/usersController.js"></script>
+</head>
+<body ng-app="adminPortal" data-ng-init="init()" ng-controller="adminPortalController" ng-show="showIfAuthorized">
+    <h1>Home</h1>
+    <p >{{ content  }}</p> 
+    <p>{{ message }}</p>
+
+    <a ui-sref="home">Home</a>
+    <a ui-sref="questions">Questions</a>
+    <a ui-sref="users">Users</a>
+
+    <div ui-view=""></div>
+</body>
+</html>
