@@ -1,7 +1,10 @@
 var loginApp = angular.module('loginPortal', ['ngCookies']);
-var presenterApp = angular.module('presenterPortal', ['ngCookies'],['ngRoute']);
+var presenterApp = angular.module('presenterPortal', ['ngCookies', 'ui.router']);
 var adminPortalApp = angular.module('adminPortal', ['ngCookies', 'ngRoute', 'ui.router']);
 
+
+
+//ADMIN PORTAL ROUTE CONFIGURATION
 adminPortalApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('home', {
@@ -22,17 +25,36 @@ adminPortalApp.config(['$stateProvider', '$urlRouterProvider', function ($stateP
         controller: 'usersController'
     });
 
+    $stateProvider.state('teams', {
+        url: '/teams',
+        templateUrl: 'teams.html',
+        controller: 'teamsController'
+    });
+
     $urlRouterProvider.otherwise('/');
 }]);
 
-//loginApp.config(function ($routeProvider) {
-//    $routeProvider
+//PRESENTER PORTAL ROUTE CONFIGURATION
+presenterApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-//        .when('/admin', {
-//            templateUrl: 'Views/admin/adminPortal.html',
-//            controller: 'adminPortalController'
-//        })
+    $stateProvider.state('teams', {
+        url: '/teams',
+        templateUrl: 'teams.html',
+        controller: 'teamsController'
+    });
 
-//        .otherwise({ redirectTo: 'admin' });
-//});
+    $stateProvider.state('home', {
+        url: '/home',
+        templateUrl: 'home.html',
+        controller: 'homeController'
+    });
+
+    $stateProvider.state('questions',{
+        url: '/questions',
+        templateUrl: 'questions.html',
+        controller: 'questionsController'
+    });
+
+    $urlRouterProvider.otherwise('/');
+}]);
 

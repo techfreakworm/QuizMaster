@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Welocome To Presenter Mode</title>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <!--Libraries-->
+    <script src="../../Scripts/Shared/jquery-1.9.1.js"></script>
+    <script src="../../Scripts/Shared/angular.js"></script>
+    <script src="../../Scripts/Shared/bootstrap.js"></script>
+    <script src="../../Scripts/Shared/angular-cookies.js"></script>
+    <script src="../../Scripts/Shared/angular-route.js"></script>
+    <script src="../../Scripts/Shared/angular-ui-router.js"></script>
+
+    <!--Modules-->
+    <script src="../../Scripts/app.js"></script>
+
+    <!--Controllers-->
+    <script src="../../Scripts/Controllers/presenter/presenterPortalController.js"></script>
+    <script src="../../Scripts/Controllers/presenter/homeController.js"></script>
+    <script src="../../Scripts/Controllers/presenter/questionsController.js"></script>
+    <script src="../../Scripts/Controllers/presenter/teamsController.js"></script>
+
+    <!--Style Sheets-->
+    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Style/Presenter.css" />
+
+
+</head>
+<body ng-app="presenterPortal" data-ng-init="init()" ng-controller="presenterPortalController">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">QuizMaster</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="teams">Teams</a></li>
+                <li><a ui-sref="questions">Questions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>Home</h1>
+    <p>{{ content  }}</p>
+    <p>{{ message }}</p>
+    <h1>template Page</h1>
+    <div ui-view=""></div>
+
+</body>
+</html>
