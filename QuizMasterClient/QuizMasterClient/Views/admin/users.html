@@ -1,11 +1,61 @@
-﻿<h1>Users</h1>
-<p>{{message}}</p>
-
-<div class="admins">
-    <button>Add admin</button>
-  
+﻿<div>
+    <div class="col-lg-6">
+        <h1>Admin</h1>
+    </div>
+    <div class="col-lg-6">
+        <h1>Presenter</h1>
+    </div>
 </div>
 
-<div class="presenters">
+<div>
+    <div class="admins col-lg-6">
+        <button>Add admin</button>
+        <div>
+            <table data-ng-init="initAdmin()">
+                <thead>
+                    <tr>
+                        <th>User_ID</th>
+                        <th>User Name</th>
+                        <th>Password</th>
+                        <th colspan="2">Options</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="adminUser in adminUsers">
+                    <tr>
+                        <td>{{ adminUser.UserId }}</td>
+                        <td>{{ adminUser.UserName }}</td>
+                        <td>{{ adminUser.UserPass }}</td>
+                        <td><button ng-click="editAdminUser($index)">Edit</button></td>
+                        <td><button ng-click="deleteAdminUser($index)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
+    </div>
+
+    <div class="presenters col-lg-6">
+        <button>Add Presenter</button>
+        <div>
+            <table data-ng-init="initPresenter()">
+                <thead>
+                    <tr>
+                        <th>User_ID</th>
+                        <th>User Name</th>
+                        <th>Password</th>
+                        <th colspan="2">Options</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="presenterUser in presenterUsers">
+                    <tr>
+                        <td>{{ presenterUser.UserId }}</td>
+                        <td>{{ presenterUser.UserName }}</td>
+                        <td>{{ presenterUser.UserPass }}</td>
+                        <td><button ng-click="editPresenterUser($index)">Edit</button></td>
+                        <td><button ng-click="deletePresenterUser($index)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
