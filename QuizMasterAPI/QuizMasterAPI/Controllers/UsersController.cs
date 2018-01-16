@@ -73,10 +73,13 @@ namespace QuizMasterAPI.Controllers
             }
             else if (foundUser != null && user.UserPass.Equals(foundUser.UserPass))
             {
-               
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, foundUser));
-                
-              
+                if (foundUser.UserType == "admin")
+                {
+                    //Return admin
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "admin"));
+                }                 
+                else
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "presenter"));
             }
             else // When user found but password incorrect
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
