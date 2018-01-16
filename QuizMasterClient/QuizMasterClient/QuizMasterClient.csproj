@@ -131,16 +131,15 @@
     <Content Include="Scripts\Shared\stateEvents.min.js" />
     <Content Include="Scripts\Shared\ui-router-angularjs.js" />
     <Content Include="Scripts\Shared\ui-router-angularjs.min.js" />
+    <Content Include="Style\common.css" />
     <Content Include="Style\login.css" />
-
+    <Content Include="Style\admin.css" />
     <Content Include="Style\Presenter.css" />
     <Content Include="Views\PresenterPortal.html" />
-
     <Content Include="Views\admin\adminPortal.html" />
     <Content Include="Views\admin\home.html" />
     <Content Include="Views\admin\questions.html" />
     <Content Include="Views\admin\users.html" />
-
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

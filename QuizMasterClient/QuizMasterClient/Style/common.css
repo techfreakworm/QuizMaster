@@ -1,0 +1,12 @@
+﻿.bg-img {
+    background-image: url(../Content/images/banner.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    filter: blur(3px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}

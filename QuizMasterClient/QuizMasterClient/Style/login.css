@@ -1,8 +1,4 @@
-body {
-  padding-top: 150px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
+
 .login-error-message{
   color: red;
 }

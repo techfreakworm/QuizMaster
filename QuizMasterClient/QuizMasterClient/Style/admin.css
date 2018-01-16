@@ -1,0 +1,10 @@
+﻿
+._hover div {
+    position:relative;
+    display:none;
+}
+._hover:hover div  {
+    background-color: cyan;
+    display:block;
+}
+
