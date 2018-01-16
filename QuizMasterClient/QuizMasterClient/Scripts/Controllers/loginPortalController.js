@@ -21,7 +21,7 @@ loginApp.controller('loginPortalController', ['$scope', '$http', '$cookies', '$w
         $http.post('http://localhost:50827/api/user/login', userdata, config).then(function (successResponse) {
             $scope.isSubmitButtonDisabled = true;
             $cookies.putObject('user', userdata);
-            $window.location.href = 'Views/adminPortal.html'
+            $window.location.href = 'Views/admin/adminPortal.html'
         }, function (errorResponse) {
             $scope.responseMessage = 'Email or Password is incorrect';
         });

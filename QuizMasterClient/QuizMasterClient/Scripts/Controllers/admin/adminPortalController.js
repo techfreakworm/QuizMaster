@@ -1,5 +1,6 @@
 ﻿adminPortalApp.controller('adminPortalController', ['$scope', '$cookies', function ($scope, $cookies) {
 
+    $scope.message = 'Hello from admin portal controller';
     $scope.content = '';
     $scope.init = function () {
 
