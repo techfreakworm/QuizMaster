@@ -168,6 +168,7 @@ namespace QuizMasterAPI.Controllers
         {
             if (disposing)
             {
+                ignoreRand.Clear();
                 db.Dispose();
             }
             base.Dispose(disposing);

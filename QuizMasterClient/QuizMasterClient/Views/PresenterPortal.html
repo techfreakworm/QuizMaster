@@ -9,8 +9,18 @@
     <script src="../Scripts/Shared/angular.js"></script>
     <script src="../Scripts/Shared/bootstrap.js"></script>
     <script src="../Scripts/Shared/angular-cookies.js"></script>
-    <script src="../Scripts/Controllers/adminPortalController.js"></script>
+    <script src="../Scripts/Shared/angular-route.min.js"></script>
+    <script type="text/ng-template" id="Views/presenterhome.html">
+        <h1>Home Page</h1>
+    </script>
+    <script type="text/ng-template" id="Views/team.html">
+        <h1>Teams Page</h1>
+    </script>
+    <script type="text/ng-template" id="Views/question.html">
+        <h1>Question Page</h1>
+    </script>
     <link rel="stylesheet" type="text/css" href="../Content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../Style/Presenter.css" />
 
     <script src="../Scripts/app.js"></script>
 </head>
@@ -18,20 +28,18 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">QuizMaster</a>
+                <a class="navbar-brand" href="#/">QuizMaster</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="#">Teams</a></li>
-                <li><a href="#">Questions</a></li>
+                <li><a href="#/team">Teams</a></li>
+                <li><a href="#/question">Questions</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
             </ul>
         </div>
     </nav>
-    <div >{{content}}</div>
-        <picture>
-            <img src= alt="QUIZ MASTER" class="img-responsive img-rounded " height="700" width="1366"/>
-        </picture>
+    <h1>template Page</h1>
+    <div ng-view class="jumbotron"></div>
 </body>
 </html>

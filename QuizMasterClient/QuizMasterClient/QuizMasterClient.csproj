@@ -112,9 +112,9 @@
     <Content Include="Scripts\Shared\jquery-1.9.1.js" />
     <Content Include="Scripts\Shared\jquery-1.9.1.min.js" />
     <Content Include="Style\login.css" />
+    <Content Include="Style\Presenter.css" />
     <Content Include="Views\adminPortal.html" />
     <Content Include="Views\PresenterPortal.html" />
-    <Content Include="Views\Team.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
