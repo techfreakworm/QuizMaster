@@ -68,16 +68,13 @@
   <ItemGroup>
     <Content Include="App_Code\GlyphIcon.cshtml" />
     <None Include="packages.config" />
-<<<<<<< HEAD
     <Content Include="Content\images\banner.png" />
     <Content Include="Scripts\Controllers\adminPortalController.js" />
     <Content Include="Scripts\Controllers\presenterPortalController.js" />
-=======
     <Content Include="Scripts\Controllers\admin\adminPortalController.js" />
     <Content Include="Scripts\Controllers\admin\homeController.js" />
     <Content Include="Scripts\Controllers\admin\questionsController.js" />
     <Content Include="Scripts\Controllers\admin\usersController.js" />
->>>>>>> development
     <Content Include="Scripts\Shared\angular-cookies.js" />
     <Content Include="Scripts\Shared\angular-cookies.min.js" />
     <Content Include="Scripts\Shared\angular-route.js" />
