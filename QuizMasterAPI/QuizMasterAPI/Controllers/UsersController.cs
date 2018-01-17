@@ -179,8 +179,9 @@ namespace QuizMasterAPI.Controllers
         }
 
         // DELETE: api/Users/5
-         [Route("{id}")]
+        [Route("{id}")]
         [ResponseType(typeof(User))]
+        [HttpDelete]
         public IHttpActionResult DeleteUser(int id, User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
