@@ -3,9 +3,10 @@
   color: red;
 }
 .form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+    width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    vertical-align: middle;
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -31,8 +32,13 @@
 }
 
 form {
-  background-color: grey;
-  border-radius: 24px;
+    background-color: rgba(128, 128, 128,0.8);
+    border-radius: 24px;
+    vertical-align: middle;
+    position: absolute;
+    top: 25%;
+    left: 38%;
+    
 }
 .form-signin input[type="password"] {
   margin-bottom: 10px;
