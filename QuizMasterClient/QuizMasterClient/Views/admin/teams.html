@@ -1,2 +1,55 @@
-﻿<h1>Teams</h1>
-<p>{{message}}</p>
+﻿<div class="teams col-lg-6">
+    <h1>Teams</h1>
+    <button ng-click="addTeam()">Add admin</button>
+    <div class="team" ng-show="isTeamVisible">
+        <div class="team-add" ng-show="isTeamAddVisible">
+            <!--ADD NEW TEAM-->
+            <input type="text" ng-model="addTeam.TeamName" />
+            <input type="text" ng-model="addTeam.TeamMembers" />
+            <button ng-click="saveTeamAdd()">Save/Add</button>
+        </div>
+        <div class="team-edit " ng-show="isTeamEditVisible">
+            <!--EDIT TEAM-->
+            <input type="text" ng-model="editTeam.TeamId" disabled />
+            <input type="text" ng-model="editTeam.TeamName" />
+            <input type="text" ng-model="editTeam.TeamMembers" />
+            <input type="text" ng-model="editTeam.TeamScore" disabled/>
+            <input type="text" ng-model="editTeam.QuestionsAttended" disabled/>
+            <input type="text" ng-model="editTeam.QuestionsPassed" disabled/>
+            <input type="text" ng-model="editTeam.AnswersCorrect" disabled/>
+
+            <button ng-click="saveTeamEdit()">Save</button>
+        </div>
+
+    </div>
+    <div>
+        <table data-ng-init="initTeam()">
+            <thead>
+                <tr>
+                    <th>Team_ID</th>
+                    <th>Team Name</th>
+                    <th>Team Members</th>
+                    <th>Team Score</th>
+                    <th>Questions Attended</th>
+                    <th>Questions Passed</th>
+                    <th>Answers Correct</th>
+                    <th colspan="2">Options</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="team in teams">
+                <tr>
+                    <td>{{ team.TeamId }}</td>
+                    <td>{{ team.TeamName }}</td>
+                    <td>{{ team.TeamMembers }}</td>
+                    <td>{{ team.TeamScore }}</td>
+                    <td>{{ team.QuestionsAttended }}</td>
+                    <td>{{ team.QuestionsPassed }}</td>
+                    <td>{{ team.AnswersCorrect }}</td>
+                    <td><button ng-click="editTeam($index)">Edit</button></td>
+                    <td><button ng-click="deleteTeam($index)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
