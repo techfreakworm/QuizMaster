@@ -26,7 +26,7 @@
             }
         };
 
-        var uri = 'http://localhost:50827/api/teams/' + $scope.teams[index].TeamId;
+        var uri = 'http://localhost:50827/api/team/' + $scope.teams[index].TeamId;
         $http.delete(uri, config).then(function (successResponse) {
             $scope.initTeam();
         }, function (errorResponse) {
@@ -99,6 +99,7 @@
         $http.post('http://localhost:50827/api/team', data, config).then(function (successResponse) {
             $scope.isTeamVisible = false;
             $scope.isTeamAddVisible = false;
+            $scope.initTeam();
 
         }, function (errorResponse) {
             console.log(errorResponse);

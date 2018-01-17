@@ -1,6 +1,6 @@
 ﻿<div class="teams col-lg-6">
     <h1>Teams</h1>
-    <button ng-click="addTeam()">Add admin</button>
+    <button ng-click="addTeam()">Add Team</button>
     <div class="team" ng-show="isTeamVisible">
         <div class="team-add" ng-show="isTeamAddVisible">
             <!--ADD NEW TEAM-->
@@ -13,10 +13,10 @@
             <input type="text" ng-model="editTeam.TeamId" disabled />
             <input type="text" ng-model="editTeam.TeamName" />
             <input type="text" ng-model="editTeam.TeamMembers" />
-            <input type="text" ng-model="editTeam.TeamScore" disabled/>
-            <input type="text" ng-model="editTeam.QuestionsAttended" disabled/>
-            <input type="text" ng-model="editTeam.QuestionsPassed" disabled/>
-            <input type="text" ng-model="editTeam.AnswersCorrect" disabled/>
+            <input type="text" ng-model="editTeam.TeamScore" disabled hidden/>
+            <input type="text" ng-model="editTeam.QuestionsAttended" disabled hidden/>
+            <input type="text" ng-model="editTeam.QuestionsPassed" disabled hidden/>
+            <input type="text" ng-model="editTeam.AnswersCorrect" disabled hidden/>
 
             <button ng-click="saveTeamEdit()">Save</button>
         </div>
