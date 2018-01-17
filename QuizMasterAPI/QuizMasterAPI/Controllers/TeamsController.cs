@@ -29,7 +29,7 @@ namespace QuizMasterAPI.Controllers
             {
                 return null;
             }
-            if (!(foundUser.UserType.Equals("presenter") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!((foundUser.UserType.Equals("admin") || (foundUser.UserType.Equals("presenter"))) && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return null;
             }
@@ -47,7 +47,7 @@ namespace QuizMasterAPI.Controllers
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("presenter") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -73,7 +73,7 @@ namespace QuizMasterAPI.Controllers
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("presenter") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -121,7 +121,7 @@ namespace QuizMasterAPI.Controllers
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("presenter") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -155,7 +155,7 @@ namespace QuizMasterAPI.Controllers
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("presenter") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
