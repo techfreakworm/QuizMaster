@@ -2,11 +2,7 @@
 
     /*------------------GLOABLS FOR ALL-----------------------*/
 
-    var config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
+
 
     //ADMIN GLOBALS
     $scope.isAdminAddVisible = false;
@@ -35,11 +31,27 @@
     };
 
     $scope.deleteAdminUser = function (index) { //delete admin user
+        var config = {
+            data: $cookies.getObject('user'),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
 
+        var uri = 'http://localhost:50827/api/user/' + $scope.adminUsers[index].UserId;
+        $http.delete(uri, config).then(function (successResponse) {
+            $scope.initAdmin();
+        }, function (errorResponse) {
+
+        });
     };
 
     $scope.initAdmin = function () { //initialize admin table
-
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
 
         $http.post("http://localhost:50827/api/user/getadmin", $cookies.getObject('user'), config).then(function (successResponse) {
             $scope.adminUsers = successResponse.data;
@@ -50,6 +62,12 @@
     };
 
     $scope.saveAdminEdit = function () {//Edit an admin user
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
         var data = {
             currentUser: $cookies.getObject('user'),
             user: {
@@ -77,6 +95,12 @@
     };
 
     $scope.saveAdminAdd = function () {//Add an admin user
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
         var data = {
             currentUser: $cookies.getObject('user'),
             user: {
@@ -113,7 +137,19 @@
     };
 
     $scope.deletePresenterUser = function (index) { //Delete a presenter
+        var config = {
+            data: $cookies.getObject('user'),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
 
+        var uri = 'http://localhost:50827/api/user/' + $scope.presenterUsers[index].UserId;
+        $http.delete(uri, config).then(function (successResponse) {
+            $scope.initPresenter();
+        }, function (errorResponse) {
+
+            });
     };
 
     $scope.initPresenter = function () { //Initialize presenter table
@@ -132,6 +168,12 @@
     };
 
     $scope.savePresenterEdit = function () { //Save presenter edits
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
         var data = {
             currentUser: $cookies.getObject('user'),
             user: {
@@ -157,6 +199,12 @@
     };
 
     $scope.savePresenterAdd = function () { //Add a presenter user
+        var config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
         var data = {
             currentUser: $cookies.getObject('user'),
             user: {
