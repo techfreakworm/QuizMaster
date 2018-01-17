@@ -132,8 +132,16 @@ namespace QuizMasterAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Questions.Add(question);
-            db.SaveChanges();
+            try
+            {
+                db.Questions.Add(question);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Question Added"));
         }
@@ -158,8 +166,16 @@ namespace QuizMasterAPI.Controllers
                 return NotFound();
             }
 
-            db.Questions.Remove(question);
-            db.SaveChanges();
+            try
+            {
+                db.Questions.Remove(question);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
 
             return Ok(question);
         }

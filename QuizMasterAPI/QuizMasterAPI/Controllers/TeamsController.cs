@@ -130,8 +130,16 @@ namespace QuizMasterAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Teams.Add(team);
-            db.SaveChanges();
+            try
+            {
+                db.Teams.Add(team);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Team Added"));
         
@@ -157,8 +165,16 @@ namespace QuizMasterAPI.Controllers
                 return NotFound();
             }
 
-            db.Teams.Remove(team);
-            db.SaveChanges();
+            try
+            {
+                db.Teams.Remove(team);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
 
             return Ok(team);
         }

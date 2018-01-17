@@ -1,10 +1,20 @@
-﻿
-._hover div {
-    position:relative;
-    display:none;
+﻿body {
+    padding-top: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 5%;
 }
-._hover:hover div  {
-    background-color: cyan;
-    display:block;
+.glass {
+    background-color: rgba(128, 128, 128,0.8);
+    border-radius: 24px;
+    color:white;
+    height: 100%;
+    padding: 15px;
+    border-color:black;
+    border:10px;
+   
 }
 
+    .glass h1 {
+        text-align: center;
+    }

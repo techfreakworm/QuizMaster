@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="App_Code\GlyphIcon.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Content\images\icon1.png" />
     <Content Include="Content\images\banner.png" />
     <Content Include="Scripts\Controllers\admin\teamsController.js" />
     <Content Include="Scripts\Controllers\presenter\homeController.js" />
