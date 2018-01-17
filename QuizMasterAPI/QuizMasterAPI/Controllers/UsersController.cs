@@ -23,8 +23,8 @@ namespace QuizMasterAPI.Controllers
 
         // GET: api/Users
         [HttpPost]
-        [Route("get")]
-        public IQueryable<User> GetUser(User currentUser)
+        [Route("getadmin")]
+        public IQueryable<User> GetAdmin(User currentUser)
         {
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
             if (foundUser == null)
@@ -33,7 +33,23 @@ namespace QuizMasterAPI.Controllers
             }
             if ((foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
             {
-                return db.User;
+                return db.User.Where(a=> a.UserType.Equals("admin"));
+            }
+            else
+                return null;
+        }
+        [HttpPost]
+        [Route("getpresenter")]
+        public IQueryable<User> GetPresenter(User currentUser)
+        {
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return null;
+            }
+            if ((foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            {
+                return db.User.Where(a => a.UserType.Equals("presenter"));
             }
             else
                 return null;
