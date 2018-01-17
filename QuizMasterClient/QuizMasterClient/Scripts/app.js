@@ -31,6 +31,12 @@ adminPortalApp.config(['$stateProvider', '$urlRouterProvider', function ($stateP
         controller: 'teamsController'
     });
 
+    $stateProvider.state('profile', {
+        url: '/profile',
+        templateUrl: 'profile.html',
+        controller: 'profileController'
+    });
+
     $urlRouterProvider.otherwise('/');
 }]);
 

@@ -70,6 +70,7 @@
     <None Include="packages.config" />
     <Content Include="Content\images\icon1.png" />
     <Content Include="Content\images\banner.png" />
+    <Content Include="Scripts\Controllers\admin\profileController.js" />
     <Content Include="Scripts\Controllers\admin\teamsController.js" />
     <Content Include="Scripts\Controllers\presenter\homeController.js" />
     <Content Include="Scripts\Controllers\presenter\presenterPortalController.js" />
@@ -139,6 +140,7 @@
     <Content Include="Style\login.css" />
     <Content Include="Style\admin.css" />
     <Content Include="Style\Presenter.css" />
+    <Content Include="Views\admin\profile.html" />
     <Content Include="Views\admin\teams.html" />
     <Content Include="Views\presenter\home.html" />
     <Content Include="Views\presenter\PresenterPortal.html" />
