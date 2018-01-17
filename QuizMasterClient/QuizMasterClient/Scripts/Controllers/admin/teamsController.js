@@ -6,7 +6,7 @@
     $scope.isTeamVisible = false;
 
     //FUNCTIONS
-    //ADMIN FUNCTIONS
+    //TEAM FUNCTIONS
     $scope.addTeam = function () { //Unhide add team menu
         $scope.isTeamVisible = true;
         $scope.isTeamAddVisible = true;
