@@ -2,6 +2,6 @@
 
     var user = $cookies.getObject('user');
     $scope.userName = user.userName;
-    $scope.usePass = user.userPass;
+    $scope.userPass = user.userPass;
 
 }]);
