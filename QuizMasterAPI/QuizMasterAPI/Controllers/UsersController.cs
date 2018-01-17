@@ -26,6 +26,7 @@ namespace QuizMasterAPI.Controllers
         [Route("getadmin")]
         public IQueryable<User> GetAdmin(User currentUser)
         {
+            
             User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
             if (foundUser == null)
             {
@@ -38,6 +39,7 @@ namespace QuizMasterAPI.Controllers
             else
                 return null;
         }
+
         [HttpPost]
         [Route("getpresenter")]
         public IQueryable<User> GetPresenter(User currentUser)
@@ -173,8 +175,16 @@ namespace QuizMasterAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.User.Add(user);
-            db.SaveChanges();
+            try
+            {
+                db.User.Add(user);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New User Added"));
         }
 
@@ -198,8 +208,16 @@ namespace QuizMasterAPI.Controllers
                 return NotFound();
             }
 
-            db.User.Remove(user);
-            db.SaveChanges();
+            try
+            {
+                db.User.Remove(user);
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+
+                throw;
+            }
 
             return Ok(user);
         }

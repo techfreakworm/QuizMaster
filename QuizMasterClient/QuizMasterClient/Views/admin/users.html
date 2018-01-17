@@ -30,16 +30,15 @@
         </div>
     </div>
 </div>
-
 <div>
-    <div class="admins col-lg-6">
+    <div class="col-lg-6 glass">
         <h1>Admin</h1>
-        <button ng-click="addAdminUser()">Add admin</button>
+        <button ng-click="addAdminUser()" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-plus-sign"></span> Add admin</button>
         <div>
-            <table data-ng-init="initAdmin()">
+            <table data-ng-init="initAdmin()" class="table">
                 <thead>
                     <tr>
-                        <th>User_ID</th>
+                        <th align="center">User_ID</th>
                         <th>User Name</th>
                         <th>Password</th>
                         <th colspan="2">Options</th>
@@ -50,20 +49,20 @@
                         <td>{{ adminUser.UserId }}</td>
                         <td>{{ adminUser.UserName }}</td>
                         <td>{{ adminUser.UserPass }}</td>
-                        <td><button ng-click="editAdminUser($index)">Edit</button></td>
-                        <td><button ng-click="deleteAdminUser($index)">Delete</button></td>
+                        <td><button ng-click="editAdminUser($index)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>
+                        <td><button ng-click="deleteAdminUser($index)" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></button></td>
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
 
     </div>
-
-    <div class="presenters col-lg-6">
+    <div class="col-lg-6 glass">
         <h1>Presenter</h1>
-        <button ng-class="addPresenterUser()">Add Presenter</button>
+        <button ng-class="addPresenterUser()" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-plus-sign"></span> Add Presenter</button>
         <div>
-            <table data-ng-init="initPresenter()">
+            <table data-ng-init="initPresenter()" class="table">
                 <thead>
                     <tr>
                         <th>User_ID</th>
@@ -77,8 +76,8 @@
                         <td>{{ presenterUser.UserId }}</td>
                         <td>{{ presenterUser.UserName }}</td>
                         <td>{{ presenterUser.UserPass }}</td>
-                        <td><button ng-click="editPresenterUser($index)">Edit</button></td>
-                        <td><button ng-click="deletePresenterUser($index)">Delete</button></td>
+                        <td><button ng-click="editPresenterUser($index)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>
+                        <td><button ng-click="deletePresenterUser($index)"  class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></button></td>
                     </tr>
                 </tbody>
             </table>

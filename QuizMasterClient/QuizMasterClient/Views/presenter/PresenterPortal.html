@@ -27,6 +27,9 @@
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../../Style/Presenter.css" />
     <link rel="stylesheet" type="text/css" href="../../Style/common.css" />
+    <link rel="icon"
+          type="image/png"
+          href="../../Content/images/icon1.png">
 
 
 </head>
@@ -35,7 +38,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" ui-sref="home">QuizMaster</a>
+                <a class="navbar-brand" ui-sref="home"><span> <img src="../../Content/images/icon1.png" /> QuizMaster </span></a>
             </div>
             <ul class="nav navbar-nav">
                
@@ -43,7 +46,12 @@
                 <li><a ui-sref="questions">Questions</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                <li>
+                    <a><span class="glyphicon glyphicon-user"></span> Profile</a>
+                </li>
+                <li>
+                    <a><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+                </li>
             </ul>
         </div>
     </nav>
