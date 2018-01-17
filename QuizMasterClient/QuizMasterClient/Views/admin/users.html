@@ -1,15 +1,40 @@
 ﻿<div>
-    <div class="col-lg-6">
-        <h1>Admin</h1>
+    <div class="edit-user" ng-show="isEditVisible">
+        <div class="admin-edit col-lg-6" ng-show="isAdminEditVisible">
+            <!--EDIT ADMIN DETAILS-->
+            <input type="text" ng-model="editAdmin.UserId" disabled />
+            <input type="text" ng-model="editAdmin.UserName" />
+            <input type="text" ng-model="editAdmin.UserPass" />
+            <button ng-click="saveAdminEdit()">Save</button>
+        </div>
+        <div class="presenter-edit col-lg-6" ng-show="isPresenterEditVisible">
+            <!--EDIT PRESENTER DETAILS-->
+            <input type="text" ng-model="editPresenter.UserId" disabled />
+            <input type="text" ng-model="editPresenter.UserName" />
+            <input type="text" ng-model="editPresenter.UserPass" />
+            <button ng-click="savePresenterEdit()">Save</button>
+        </div>
     </div>
-    <div class="col-lg-6">
-        <h1>Presenter</h1>
+    <div class="add-user" ng-show="isAddVisible">
+        <div class="admin-add col-lg-6" ng-show="isAdminAddVisible">
+            <!--ADD NEW ADMIN USER-->
+            <input type="text" ng-model="addAdmin.UserName" />
+            <input type="text" ng-model="addAdmin.UserPass" />
+            <button ng-click="saveAdminAdd()">Save/Add</button>
+        </div>
+        <div class="presenter-edit col-lg-6" ng-show="isPresenterAddVisible">
+            <!--ADD NEW PRESENTER USER-->
+            <input type="text" ng-model="addPresenter.UserName" />
+            <input type="text" ng-model="addPresenter.UserPass" />
+            <button ng-click="savePresenterAdd()">Save/Add</button>
+        </div>
     </div>
 </div>
 
 <div>
     <div class="admins col-lg-6">
-        <button>Add admin</button>
+        <h1>Admin</h1>
+        <button ng-click="addAdminUser()">Add admin</button>
         <div>
             <table data-ng-init="initAdmin()">
                 <thead>
@@ -35,7 +60,8 @@
     </div>
 
     <div class="presenters col-lg-6">
-        <button>Add Presenter</button>
+        <h1>Presenter</h1>
+        <button ng-class="addPresenterUser()">Add Presenter</button>
         <div>
             <table data-ng-init="initPresenter()">
                 <thead>
