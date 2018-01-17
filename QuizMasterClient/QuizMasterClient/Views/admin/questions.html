@@ -1,2 +1,69 @@
-﻿<h1>Questions</h1>
-<p>{{message}}</p>
+﻿<div class="questions col-lg-6">
+    <h1>Questions</h1>
+    <button ng-click="addQuestion()">Add Question</button>
+    <div class="question" ng-show="isQuestionVisible">
+        <div class="question-add" ng-show="isQuestionAddVisible">
+            <!--ADD NEW QUESTION-->
+            <input type="text" ng-model="addQuestion.Ques" />
+            <input type="text" ng-model="addQuestion.OptionOne"value="1." />
+            <input type="text" ng-model="addQuestion.OptionTwo" value="1."/>
+            <input type="text" ng-model="addQuestion.OptionThree" value="1."/>
+            <input type="text" ng-model="addQuestion.OptionFour"value="1." />
+            <select ng-model="addQuestion.Answer">
+                <option>{{ addQuestion.OptionOne }}</option>
+                <option>{{addQuestion.OptionTwo}}</option>
+                <option>{{addQuestion.OptionThree}}</option>
+                <option>{{addQuestion.OptionFour}}</option>
+            </select>
+            <button ng-click="saveQuestionAdd()">Save/Add</button>
+        </div>
+        <div class="question-edit " ng-show="isQuestionEditVisible">
+            <!--EDIT QUESTION-->
+            <input type="text" ng-model="editQuestion.QId" disabled />
+            <input type="text" ng-model="editQuestion.Ques" />
+            <input type="text" ng-model="editQuestion.OptionOne" />
+            <input type="text" ng-model="editQuestion.OptionTwo" />
+            <input type="text" ng-model="editQuestion.OptionThree" />
+            <input type="text" ng-model="editQuestion.OptionFour" />
+            <select ng-model="editQuestion.Answer">
+                <option>{{ editQuestion.OptionOne }}</option>
+                <option>{{editQuestion.OptionTwo}}</option>
+                <option>{{editQuestion.OptionThree}}</option>
+                <option>{{editQuestion.OptionFour}}</option>
+            </select>
+
+            <button ng-click="saveQuestionEdit()">Save</button>
+        </div>
+
+    </div>
+    <div>
+        <table data-ng-init="initQuestion()">
+            <thead>
+                <tr>
+                    <th>Ques_ID</th>
+                    <th>Question</th>
+                    <th>Option 1</th>
+                    <th>Option 2</th>
+                    <th>Option 3</th>
+                    <th>Option 4</th>
+                    <th>Answer</th>
+                    <th colspan="2">Options</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="question in questions">
+                <tr>
+                    <td>{{ question.QId }}</td>
+                    <td>{{ question.Ques }}</td>
+                    <td>{{ question.OptionOne }}</td>
+                    <td>{{ question.OptionTwo }}</td>
+                    <td>{{ question.OptionThree }}</td>
+                    <td>{{ question.OptionFour }}</td>
+                    <td>{{ question.Answer }}</td>
+                    <td><button ng-click="editQuestion($index)">Edit</button></td>
+                    <td><button ng-click="deleteQuestion($index)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

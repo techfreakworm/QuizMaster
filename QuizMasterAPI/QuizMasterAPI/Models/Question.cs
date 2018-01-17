@@ -22,7 +22,7 @@ namespace QuizMasterAPI.Models
         [Required]
         public String OptionFour { get; set; }
         [Required]
-        public String Answwer { get; set; }
+        public String Answer { get; set; }
 
     }
 }
