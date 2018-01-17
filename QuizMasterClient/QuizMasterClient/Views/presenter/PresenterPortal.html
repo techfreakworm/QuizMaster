@@ -26,17 +26,19 @@
     <!--Style Sheets-->
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../../Style/Presenter.css" />
+    <link rel="stylesheet" type="text/css" href="../../Style/common.css" />
 
 
 </head>
 <body ng-app="presenterPortal" data-ng-init="init()" ng-controller="presenterPortalController">
+    <div class="bg-img"></div>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/">QuizMaster</a>
+                <a class="navbar-brand" ui-sref="home">QuizMaster</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a ui-sref="home">Home</a></li>
+               
                 <li><a ui-sref="teams">Teams</a></li>
                 <li><a ui-sref="questions">Questions</a></li>
             </ul>
