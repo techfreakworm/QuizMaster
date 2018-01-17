@@ -138,7 +138,7 @@ namespace QuizMasterAPI.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException)
             {
                 if (!UserExists(id))
                 {
@@ -146,8 +146,13 @@ namespace QuizMasterAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Name already exists"));
                 }
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "User Updated"));
@@ -183,7 +188,12 @@ namespace QuizMasterAPI.Controllers
             catch (DbUpdateException)
             {
 
-                throw;
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Name Already exists"));
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New User Added"));
         }
@@ -219,6 +229,12 @@ namespace QuizMasterAPI.Controllers
 
                 throw;
             }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
+            }
+
 
             return Ok(user);
         }

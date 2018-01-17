@@ -95,16 +95,21 @@ namespace QuizMasterAPI.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException)
             {
                 if (!QuestionExists(id))
                 {
-                    return NotFound();
+                    return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Name already exists"));
                 }
                 else
                 {
                     throw;
                 }
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -140,7 +145,12 @@ namespace QuizMasterAPI.Controllers
             catch (DbUpdateException)
             {
 
-                throw;
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Name Already exists"));
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Question Added"));
@@ -174,7 +184,12 @@ namespace QuizMasterAPI.Controllers
             catch (DbUpdateException)
             {
 
-                throw;
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Delete"));
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
 
             return Ok(question);

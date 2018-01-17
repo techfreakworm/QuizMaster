@@ -1,29 +1,29 @@
-﻿<div class="teams col-lg-6">
+﻿<div class="teams col-lg-12 glass">
     <h1>Teams</h1>
-    <button ng-click="addTeam()">Add Team</button>
+    <button ng-click="addTeam()" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Team</button>
     <div class="team" ng-show="isTeamVisible">
         <div class="team-add" ng-show="isTeamAddVisible">
             <!--ADD NEW TEAM-->
-            <input type="text" ng-model="addTeam.TeamName" />
-            <input type="text" ng-model="addTeam.TeamMembers" />
-            <button ng-click="saveTeamAdd()">Save/Add</button>
+            <input type="text" ng-model="addTeam.TeamName" class="form-control" placeholder="Team Name"/>
+            <input type="text" ng-model="addTeam.TeamMembers" class="form-control" placeholder="Team Memebers(separated by ',')"/>
+            <button ng-click="saveTeamAdd()" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-plus"></span> Add</button>
         </div>
         <div class="team-edit " ng-show="isTeamEditVisible">
             <!--EDIT TEAM-->
-            <input type="text" ng-model="editTeam.TeamId" disabled />
-            <input type="text" ng-model="editTeam.TeamName" />
-            <input type="text" ng-model="editTeam.TeamMembers" />
+            <input type="text" ng-model="editTeam.TeamId" disabled class="form-control"/>
+            <input type="text" ng-model="editTeam.TeamName" class="form-control"/>
+            <input type="text" ng-model="editTeam.TeamMembers" class="form-control"/>
             <input type="text" ng-model="editTeam.TeamScore" disabled hidden/>
             <input type="text" ng-model="editTeam.QuestionsAttended" disabled hidden/>
             <input type="text" ng-model="editTeam.QuestionsPassed" disabled hidden/>
             <input type="text" ng-model="editTeam.AnswersCorrect" disabled hidden/>
 
-            <button ng-click="saveTeamEdit()">Save</button>
+            <button ng-click="saveTeamEdit()" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-check"></span> Save</button>
         </div>
 
     </div>
     <div>
-        <table data-ng-init="initTeam()">
+        <table data-ng-init="initTeam()" class="table">
             <thead>
                 <tr>
                     <th>Team_ID</th>
@@ -45,8 +45,8 @@
                     <td>{{ team.QuestionsAttended }}</td>
                     <td>{{ team.QuestionsPassed }}</td>
                     <td>{{ team.AnswersCorrect }}</td>
-                    <td><button ng-click="editTeam($index)">Edit</button></td>
-                    <td><button ng-click="deleteTeam($index)">Delete</button></td>
+                    <td><button ng-click="editTeam($index)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>
+                    <td><button ng-click="deleteTeam($index)" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
             </tbody>
         </table>

@@ -1,43 +1,43 @@
-﻿<div class="questions col-lg-6">
+﻿<div class="questions col-lg-12 glass">
     <h1>Questions</h1>
-    <button ng-click="addQuestion()">Add Question</button>
-    <div class="question" ng-show="isQuestionVisible">
+    <button ng-click="addQuestion()" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Question</button>
+    <div class="question" ng-show="isQuestionVisible" >
         <div class="question-add" ng-show="isQuestionAddVisible">
             <!--ADD NEW QUESTION-->
-            <input type="text" ng-model="addQuestion.Ques" />
-            <input type="text" ng-model="addQuestion.OptionOne"value="1." />
-            <input type="text" ng-model="addQuestion.OptionTwo" value="1."/>
-            <input type="text" ng-model="addQuestion.OptionThree" value="1."/>
-            <input type="text" ng-model="addQuestion.OptionFour"value="1." />
-            <select ng-model="addQuestion.Answer">
+            <input type="text" ng-model="addQuestion.Ques" class="form-control"/>
+            <input type="text" ng-model="addQuestion.OptionOne"value="1." class="form-control"/>
+            <input type="text" ng-model="addQuestion.OptionTwo" value="2." class="form-control"/>
+            <input type="text" ng-model="addQuestion.OptionThree" value="3." class="form-control"/>
+            <input type="text" ng-model="addQuestion.OptionFour"value="4." class="form-control"/>
+            <select ng-model="addQuestion.Answer" class="form-control">
                 <option>{{ addQuestion.OptionOne }}</option>
                 <option>{{addQuestion.OptionTwo}}</option>
                 <option>{{addQuestion.OptionThree}}</option>
                 <option>{{addQuestion.OptionFour}}</option>
             </select>
-            <button ng-click="saveQuestionAdd()">Save/Add</button>
+            <button ng-click="saveQuestionAdd()" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-plus"></span> Add</button>
         </div>
         <div class="question-edit " ng-show="isQuestionEditVisible">
             <!--EDIT QUESTION-->
-            <input type="text" ng-model="editQuestion.QId" disabled />
-            <input type="text" ng-model="editQuestion.Ques" />
-            <input type="text" ng-model="editQuestion.OptionOne" />
-            <input type="text" ng-model="editQuestion.OptionTwo" />
-            <input type="text" ng-model="editQuestion.OptionThree" />
-            <input type="text" ng-model="editQuestion.OptionFour" />
-            <select ng-model="editQuestion.Answer">
+            <input type="text" ng-model="editQuestion.QId" disabled class="form-control"/>
+            <input type="text" ng-model="editQuestion.Ques" class="form-control"/>
+            <input type="text" ng-model="editQuestion.OptionOne" class="form-control"/>
+            <input type="text" ng-model="editQuestion.OptionTwo" class="form-control"/>
+            <input type="text" ng-model="editQuestion.OptionThree" class="form-control"/>
+            <input type="text" ng-model="editQuestion.OptionFour" class="form-control"/>
+            <select ng-model="editQuestion.Answer" class="form-control">
                 <option>{{ editQuestion.OptionOne }}</option>
                 <option>{{editQuestion.OptionTwo}}</option>
                 <option>{{editQuestion.OptionThree}}</option>
                 <option>{{editQuestion.OptionFour}}</option>
             </select>
 
-            <button ng-click="saveQuestionEdit()">Save</button>
+            <button ng-click="saveQuestionEdit()" class="btn btn-md btn-primary">><span class="glyphicon glyphicon-check"></span> Save</button>
         </div>
 
     </div>
     <div>
-        <table data-ng-init="initQuestion()">
+        <table data-ng-init="initQuestion()" class="table">
             <thead>
                 <tr>
                     <th>Ques_ID</th>
@@ -59,8 +59,8 @@
                     <td>{{ question.OptionThree }}</td>
                     <td>{{ question.OptionFour }}</td>
                     <td>{{ question.Answer }}</td>
-                    <td><button ng-click="editQuestion($index)">Edit</button></td>
-                    <td><button ng-click="deleteQuestion($index)">Delete</button></td>
+                    <td><button ng-click="editQuestion($index)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>
+                    <td><button ng-click="deleteQuestion($index)" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
             </tbody>
         </table>

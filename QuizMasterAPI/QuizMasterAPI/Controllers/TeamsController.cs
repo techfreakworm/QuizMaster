@@ -93,18 +93,22 @@ namespace QuizMasterAPI.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException)
             {
                 if (!TeamExists(id))
                 {
-                    return NotFound();
+                    return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Name already exists"));
                 }
                 else
                 {
                     throw;
                 }
             }
+            catch (Exception)
+            {
 
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -140,6 +144,11 @@ namespace QuizMasterAPI.Controllers
 
                 throw;
             }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
+            }
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Team Added"));
         
@@ -174,6 +183,11 @@ namespace QuizMasterAPI.Controllers
             {
 
                 throw;
+            }
+            catch (Exception)
+            {
+
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process your request"));
             }
 
             return Ok(team);
