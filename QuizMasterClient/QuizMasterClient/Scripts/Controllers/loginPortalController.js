@@ -31,16 +31,26 @@ loginApp.controller('loginPortalController', ['$scope', '$http', '$cookies', '$w
         }, function (errorResponse) {
             $scope.responseMessage = 'Email or Password is incorrect';
         });
+    }
 
+    $scope.init = function () {
+        var userdata = $cookies.getObject('user');
 
-		//$http({
-		//	method: 'POST',
-		//	url: 'http://localhost:50827/api/Users/Login',
-		//	data: userdata,
-		//	dataType: 'json',
-		//	headers: {
-		//		'Content-Type': 'application/json'
-		//	}
-		//});
-	}
+        if (userdata != null) {
+            var config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            $http.post('http://localhost:50827/api/user/login', userdata, config).then(function (successResponse) {
+                if (successResponse.data == "admin") {
+                    $window.location.href = 'Views/admin/adminPortal.html';
+                }
+                else
+                    $window.location.href = 'Views/presenter/PresenterPortal.html';
+            }, function (errorResponse) {
+
+            });
+        }
+    };
 }]);

@@ -8,7 +8,7 @@ var adminPortalApp = angular.module('adminPortal', ['ngCookies', 'ngRoute', 'ui.
 adminPortalApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('home', {
-        url: '/home',
+        url: '/',
         templateUrl: 'home.html',
         controller: 'homeController'
     });
@@ -50,7 +50,7 @@ presenterApp.config(['$stateProvider', '$urlRouterProvider', function ($statePro
     });
 
     $stateProvider.state('home', {
-        url: '/home',
+        url: '/',
         templateUrl: 'home.html',
         controller: 'homeController'
     });
@@ -59,6 +59,12 @@ presenterApp.config(['$stateProvider', '$urlRouterProvider', function ($statePro
         url: '/questions',
         templateUrl: 'questions.html',
         controller: 'questionsController'
+    });
+
+    $stateProvider.state('profile', {
+        url: '/profile',
+        templateUrl: 'profile.html',
+        controller: 'profileController'
     });
 
     $urlRouterProvider.otherwise('/');

@@ -1,4 +1,4 @@
-﻿presenterApp.controller('presenterPortalController', ['$scope', '$cookies', function ($scope, $cookies) {
+﻿presenterApp.controller('presenterPortalController', ['$scope', '$cookies','$window', function ($scope, $cookies,$window) {
 
     $scope.message = 'Hello from presenter portal controller';
     $scope.content = '';
@@ -15,4 +15,9 @@
             $scope.showIfAuthorized = true;
         }
     }
+
+    $scope.logOut = function () {
+        $cookies.remove('user', { path: '/' });
+        $window.location.href = "../../index.html";
+    };
 }]);
