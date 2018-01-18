@@ -14,7 +14,7 @@
             <input type="text" ng-model="editTeam.TeamName" class="form-control"/>
             <input type="text" ng-model="editTeam.TeamMembers" class="form-control"/>
             <input type="text" ng-model="editTeam.TeamScore" disabled hidden/>
-            <input type="text" ng-model="editTeam.QuestionsAttended" disabled hidden/>
+            <input type="text" ng-model="editTeam.QuestionsAttempted" disabled hidden/>
             <input type="text" ng-model="editTeam.QuestionsPassed" disabled hidden/>
             <input type="text" ng-model="editTeam.AnswersCorrect" disabled hidden/>
 
@@ -30,7 +30,7 @@
                     <th>Team Name</th>
                     <th>Team Members</th>
                     <th>Team Score</th>
-                    <th>Questions Attended</th>
+                    <th>Questions Attempted</th>
                     <th>Questions Passed</th>
                     <th>Answers Correct</th>
                     <th colspan="2">Options</th>
@@ -42,7 +42,7 @@
                     <td>{{ team.TeamName }}</td>
                     <td>{{ team.TeamMembers }}</td>
                     <td>{{ team.TeamScore }}</td>
-                    <td>{{ team.QuestionsAttended }}</td>
+                    <td>{{ team.QuestionsAttempted }}</td>
                     <td>{{ team.QuestionsPassed }}</td>
                     <td>{{ team.AnswersCorrect }}</td>
                     <td><button ng-click="editTeam($index)" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>

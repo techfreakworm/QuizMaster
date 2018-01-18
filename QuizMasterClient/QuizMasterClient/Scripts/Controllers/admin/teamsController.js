@@ -43,7 +43,7 @@
 
         $http.post("http://localhost:50827/api/team/get", $cookies.getObject('user'), config).then(function (successResponse) {
             $scope.teams = successResponse.data;
-            //console.log(adminDetails);
+            //console.log($scope.teams);
         }, function (errorResponse) {
             console.log("Cannot fetch all admin user details");
         });

@@ -11,7 +11,6 @@ namespace QuizMasterAPI.Models
     public class Team
     {
         [Key]
-        [JsonProperty("tId")]
         public int TeamId { get; set; }
         [MaxLength(50), Required, Index(IsUnique =true)]
         public String TeamName { get; set; }
