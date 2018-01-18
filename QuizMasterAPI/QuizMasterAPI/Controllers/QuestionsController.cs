@@ -296,7 +296,6 @@ namespace QuizMasterAPI.Controllers
                 }
                 else if (PassFLAG == 1)
                 {
-                    team.AnswersCorrect++;
                     team.TeamScore += 5;
                     team.QuestionsPassed++;
                     try

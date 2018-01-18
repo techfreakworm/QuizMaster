@@ -148,6 +148,7 @@
     <Content Include="Views\admin\home.html" />
     <Content Include="Views\admin\questions.html" />
     <Content Include="Views\admin\users.html" />
+    <Content Include="Views\presenter\profile.html" />
     <Content Include="Views\presenter\questions.html" />
     <Content Include="Views\presenter\teams.html" />
     <Content Include="Web.config" />

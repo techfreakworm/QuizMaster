@@ -1,22 +1,30 @@
-﻿<div ng-init="initData()">
+﻿<div ng-init="initData()" class=" glass">
     <h1>Question for Team {{ currentTeam.TeamName }}</h1>
     <p>{{ currentQuestion.Ques }}</p>
-    <label>
-        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionOne">
-        {{currentQuestion.OptionTwo}}
-    </label><br />
-    <label>
-        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionTwo">
-        {{currentQuestion.OptionTwo}}
-    </label><br />
-    <label>
-        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionThree">
-        {{currentQuestion.OptionThree}}
-    </label><br />
-    <label>
-        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionFour">
-        {{currentQuestion.OptionFour}}
-    </label><br />
-    <button ng-click="submitAnswer()">Submit</button>
-    <button ng-click="passQuestion(currentQuestion)">Pass</button>
-</div>
+    <div class="rado-div">
+
+        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionOne" class="radio radio-inline" id="radio 1"/>
+        <label for="radio 1">
+            {{currentQuestion.OptionTwo}}
+        </label>
+    </div>
+    <div class="rado-div">
+        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionTwo" class="radio radio-inline" id="radio 2"/>
+        <label for="radio 2">
+            {{currentQuestion.OptionTwo}}
+        </label>
+    </div>
+    <div class="rado-div">
+        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionThree" class="radio radio-inline" id="radio 3"/>
+        <label for="radio 3">
+            {{currentQuestion.OptionThree}}
+        </label>
+    </div>
+    <div class="rado-div">
+        <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionFour" class="radio radio-inline" id="radio 4"/>
+        <label for="radio 4">
+            {{currentQuestion.OptionFour}}
+        </label></div><br />
+        <button ng-click="submitAnswer()" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-ok"></span> Submit</button>
+        <button ng-click="passQuestion(currentQuestion)" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-arrow-right"></span> Pass</button>
+    </div>
