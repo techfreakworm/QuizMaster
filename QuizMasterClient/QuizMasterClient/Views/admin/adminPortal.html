@@ -11,13 +11,12 @@
     <script src="../../Scripts/Shared/angular-cookies.js"></script>
     <script src="../../Scripts/Shared/angular-route.js"></script>
     <script src="../../Scripts/Shared/angular-ui-router.js"></script>
+
     <!--Style Sheets-->
     <link rel="stylesheet" type="text/css" href="../../Content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../../Style/admin.css" />
     <link rel="stylesheet" type="text/css" href="../../Style/common.css" />
-    <link rel="icon"
-          type="image/png"
-          href="../../Content/images/icon1.png">
+    <link rel="icon" type="image/png" href="../../Content/images/icon1.png">
 
     <!--Modules-->
     <script src="../../Scripts/app.js"></script>
@@ -49,7 +48,7 @@
                         <a ui-sref="profile"><span class="glyphicon glyphicon-user"></span> Profile</a>
                     </li>
                     <li>
-                        <a><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+                        <a ng-click="logOut()"><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
                     </li>
                 </ul>
             </div>
