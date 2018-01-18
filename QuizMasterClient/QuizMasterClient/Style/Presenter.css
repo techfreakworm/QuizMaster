@@ -4,3 +4,17 @@
     padding-right :2%;
     padding-bottom:5%;
 }
+.glass {
+    background-color: rgba(128, 128, 128,0.8);
+    border-radius: 24px;
+    color: white;
+    height: 100%;
+    padding: 15px;
+    border-style: dashed;
+    border-color: black;
+    border-width: 1px;
+    text-align:center;
+}
+    .glass th {
+        text-align: center;
+    }
