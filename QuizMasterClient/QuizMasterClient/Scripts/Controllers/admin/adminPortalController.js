@@ -18,7 +18,7 @@
     }
 
     $scope.logOut = function () {
-        $cookies.user = { 'UserName': 'abc', 'UserPass': 'xyz' };
+        $cookies.remove('user', { path: '/' });
         $window.location.href = "../../index.html";
     };
 }]);
