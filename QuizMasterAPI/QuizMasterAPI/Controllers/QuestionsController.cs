@@ -209,7 +209,7 @@ namespace QuizMasterAPI.Controllers
         {
             return db.Questions.Count(e => e.QId == id) > 0;
         }
-        [HttpGet]
+        [HttpPost]
         [Route("random")]
         [ResponseType(typeof(Question))]
         public IHttpActionResult RandomQuestion(User currentUser)
@@ -237,6 +237,88 @@ namespace QuizMasterAPI.Controllers
             Question question = db.Questions.OrderBy(x => x.QId).Skip(rno).FirstOrDefault();
             ignoreRand.Add(rno);
             return Ok(question);
+        }
+        [HttpPost]
+        [Route("check")]
+        public IHttpActionResult CheckAnswer(JObject jdata)
+        {
+            dynamic JsonData = jdata;
+            User currentUser;
+            int qId;
+            int tId;
+            String answer;
+            int PassFLAG = 0;
+            try
+            {
+                currentUser = JsonData.currentUser.ToObject<User>();
+                qId = JsonData.qId.ToObject<int>();
+                tId = JsonData.tId.ToObject<int>();
+                answer = JsonData.answer.ToObject<String>();
+                PassFLAG = JsonData.PassFlag.ToObject<int>();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
+            if (!(((foundUser.UserType.Equals("presenter")) && currentUser.UserPass.Equals(foundUser.UserPass))))
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
+            }
+            Question question = db.Questions.Find(qId);
+            Team team = db.Teams.Find(tId);
+            if (question == null || team == null)
+            {
+                return BadRequest();
+            }
+            else if (question.Answer.Equals(answer))
+            {
+                team.QuestionsAttempted++;
+                team.AnswersCorrect++;
+                if (PassFLAG == 0)
+                {
+                    team.TeamScore += 10;
+                    try
+                    {
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process Your Request"));
+                    }
+                    return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "Correct Answer"));
+                }
+                else if (PassFLAG == 1)
+                {
+                    team.AnswersCorrect++;
+                    team.TeamScore += 5;
+                    team.QuestionsPassed++;
+                    try
+                    {
+                        db.Entry(team).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Cant Process Your Request"));
+                    }
+                    return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "Correct Answer"));
+                }
+
+            }
+            else
+            {
+                team.QuestionsAttempted++;
+                db.Entry(team).State = EntityState.Modified;
+                db.SaveChanges();
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "Wrong Answer"));
+            }
+            return Ok();
         }
     }
 }

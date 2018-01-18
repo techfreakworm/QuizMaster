@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,7 @@ namespace QuizMasterAPI.Models
     public class Team
     {
         [Key]
+        [JsonProperty("tId")]
         public int TeamId { get; set; }
         [MaxLength(50), Required, Index(IsUnique =true)]
         public String TeamName { get; set; }
