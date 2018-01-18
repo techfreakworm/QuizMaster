@@ -4,12 +4,13 @@
     <div class="question" ng-show="isQuestionVisible" >
         <div class="question-add" ng-show="isQuestionAddVisible">
             <!--ADD NEW QUESTION-->
-            <input type="text" ng-model="addQuestion.Ques" class="form-control"/>
-            <input type="text" ng-model="addQuestion.OptionOne"value="1." class="form-control"/>
-            <input type="text" ng-model="addQuestion.OptionTwo" value="2." class="form-control"/>
-            <input type="text" ng-model="addQuestion.OptionThree" value="3." class="form-control"/>
-            <input type="text" ng-model="addQuestion.OptionFour"value="4." class="form-control"/>
+            <input type="text" ng-model="addQuestion.Ques" class="form-control" placeholder="Question"/>
+            <input type="text" ng-model="addQuestion.OptionOne"value="1." class="form-control" placeholder="Option 1"/>
+            <input type="text" ng-model="addQuestion.OptionTwo" value="2." class="form-control" placeholder="Option 2"/>
+            <input type="text" ng-model="addQuestion.OptionThree" value="3." class="form-control" placeholder="Option 3"/>
+            <input type="text" ng-model="addQuestion.OptionFour"value="4." class="form-control" placeholder="Option 4"/>
             <select ng-model="addQuestion.Answer" class="form-control">
+                <option value="" disabled selected>--Answer--</option>
                 <option>{{ addQuestion.OptionOne }}</option>
                 <option>{{addQuestion.OptionTwo}}</option>
                 <option>{{addQuestion.OptionThree}}</option>

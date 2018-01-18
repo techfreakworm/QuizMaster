@@ -13,5 +13,19 @@
     border-style:dashed;
     border-color:black;
     border-width: 1px;
+    text-align:center;
+}
+    .glass th {
+        text-align:center;
+    }
+select:required:invalid {
+    color: gray;
 }
 
+option[value=""][disabled] {
+    display: none;
+}
+
+option {
+    color: black;
+}

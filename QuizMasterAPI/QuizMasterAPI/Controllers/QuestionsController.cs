@@ -14,12 +14,15 @@ using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    
     [RoutePrefix("api/question")]
     public class QuestionsController : ApiController
     {
-        private QuizMasterDbContext db = new QuizMasterDbContext();
         Random rnd = new Random();
-        static List<int> ignoreRand = new List<int> { };
+        private static List<int> ignoreRand = new List<int> { };
+        private static int counter = 0;
+        private QuizMasterDbContext db = new QuizMasterDbContext();
+       
         [Route("get")]
         // GET: api/Questions
         [HttpPost]
@@ -199,7 +202,6 @@ namespace QuizMasterAPI.Controllers
         {
             if (disposing)
             {
-                ignoreRand.Clear();
                 db.Dispose();
             }
             base.Dispose(disposing);
@@ -225,17 +227,16 @@ namespace QuizMasterAPI.Controllers
             }
             int total = db.Questions.Count();
             int rno = rnd.Next(0, total);
-            int counter = 0;
-            while (ignoreRand.Contains(rno))
+            while (QuestionsController.ignoreRand.Contains(rno))
             {
-                if (counter < total)
-                    counter++;
+                if (QuestionsController.counter < total)
+                    rno = rnd.Next(0, total);
                 else
                     return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NoContent, "No Questions found"));
-                rno = rnd.Next(0, total);
             }
             Question question = db.Questions.OrderBy(x => x.QId).Skip(rno).FirstOrDefault();
             ignoreRand.Add(rno);
+            counter++;
             return Ok(question);
         }
         [HttpPost]
