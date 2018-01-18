@@ -61,6 +61,12 @@ presenterApp.config(['$stateProvider', '$urlRouterProvider', function ($statePro
         controller: 'questionsController'
     });
 
+    $stateProvider.state('profile', {
+        url: '/profile',
+        templateUrl: 'profile.html',
+        controller: 'profileController'
+    });
+
     $urlRouterProvider.otherwise('/');
 }]);
 

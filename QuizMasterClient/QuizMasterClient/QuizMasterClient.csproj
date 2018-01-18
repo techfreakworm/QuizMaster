@@ -78,6 +78,7 @@
     <Content Include="Scripts\Controllers\admin\homeController.js" />
     <Content Include="Scripts\Controllers\admin\questionsController.js" />
     <Content Include="Scripts\Controllers\admin\usersController.js" />
+    <Content Include="Scripts\Controllers\presenter\profileController.js" />
     <Content Include="Scripts\Controllers\presenter\questionsController.js" />
     <Content Include="Scripts\Controllers\presenter\teamsController.js" />
     <Content Include="Scripts\Shared\angular-cookies.js" />
