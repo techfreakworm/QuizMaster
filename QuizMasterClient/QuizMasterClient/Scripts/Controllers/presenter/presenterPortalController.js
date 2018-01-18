@@ -14,7 +14,5 @@
             $scope.content = 'You are an authorized user';
             $scope.showIfAuthorized = true;
         }
-
-        console.log(userdata);
     }
 }]);

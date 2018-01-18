@@ -1,4 +1,4 @@
-﻿adminPortalApp.controller('teamsController', ['$scope', '$http', '$cookies', function ($scope, $http, $cookies)  {
+﻿adminPortalApp.controller('teamsController', ['$scope', '$http', '$cookies',  function ($scope, $http, $cookies)  {
 
     //GLOBALS
     $scope.isTeamAddVisible = false;
@@ -12,13 +12,13 @@
         $scope.isTeamAddVisible = true;
     };
 
-    $scope.editTeam = function (index) { //Unhide edit presenter menu
+    $scope.editTeam = function (index) { //Unhide edit team menu
         $scope.isTeamVisible = true;
         $scope.isTeamEditVisible = true;
         $scope.editTeam = $scope.teams[index];
     };
 
-    $scope.deleteTeam = function (index) { //delete admin user
+    $scope.deleteTeam = function (index) { //delete team
         var config = {
             data: $cookies.getObject('user'),
             headers: {
@@ -34,7 +34,7 @@
         });
     };
 
-    $scope.initTeam = function () { //initialize admin table
+    $scope.initTeam = function () { //initialize team table
         var config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -43,13 +43,12 @@
 
         $http.post("http://localhost:50827/api/team/get", $cookies.getObject('user'), config).then(function (successResponse) {
             $scope.teams = successResponse.data;
-            //console.log($scope.teams);
         }, function (errorResponse) {
             console.log("Cannot fetch all admin user details");
         });
     };
 
-    $scope.saveTeamEdit = function () {//Edit an admin user
+    $scope.saveTeamEdit = function () {//Edit a team
         var config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -72,7 +71,7 @@
         $http.put(uri, data, config).then(function (successResponse) {
             $scope.isTeamVisible = false;
             $scope.isTeamEditVisible = false;
-
+            console.log("Team edit successful!")
         }, function (errorResponse) {
             console.log(errorResponse);
 
@@ -81,7 +80,7 @@
 
     };
 
-    $scope.saveTeamAdd = function () {//Add an admin user
+    $scope.saveTeamAdd = function () {//Add a team
         var config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -100,7 +99,7 @@
             $scope.isTeamVisible = false;
             $scope.isTeamAddVisible = false;
             $scope.initTeam();
-
+            console.log("Team added!");
         }, function (errorResponse) {
             console.log(errorResponse);
 

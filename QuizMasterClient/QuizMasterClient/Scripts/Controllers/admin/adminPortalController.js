@@ -1,4 +1,4 @@
-﻿adminPortalApp.controller('adminPortalController', ['$scope', '$cookies', function ($scope, $cookies) {
+﻿adminPortalApp.controller('adminPortalController', ['$scope', '$cookies', '$window', function ($scope, $cookies, $window) {
 
     $scope.message = 'Hello from admin portal controller';
     $scope.content = '';
@@ -6,7 +6,6 @@
 
         $scope.showIfAuthorized = false;
         var userdata = $cookies.getObject('user');
-        console.log('Init called');
         if (userdata == null) {
             $scope.content = 'You are not an authorized user but this will not show';
         }
@@ -17,4 +16,9 @@
             
         console.log(userdata);
     }
+
+    $scope.logOut = function () {
+        $cookies.user = { 'UserName': 'abc', 'UserPass': 'xyz' };
+        $window.location.href = "../../index.html";
+    };
 }]);

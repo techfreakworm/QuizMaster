@@ -1,6 +1,6 @@
 ﻿presenterApp.controller('teamsController', ['$scope', '$http', '$cookies', function ($scope, $http, $cookies)  {
 
-    $scope.initTeam = function () { //initialize admin table
+    $scope.initTeam = function () { //initialize team table
         var config = {
             headers: {
                 'Content-Type': 'application/json'
