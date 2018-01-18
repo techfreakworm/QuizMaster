@@ -1,2 +1,20 @@
-﻿<h1>Questions</h1>
-<p>{{message}}</p>
+﻿<h1>Question for Team {{ currentTeam.teamName }}</h1>
+<p>{{ currentQuestion.Ques }}</p>
+<label>
+    <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionOne">
+    {{currentQuestion.OptionTwo}}
+</label><br />
+<label>
+    <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionTwo">
+    {{currentQuestion.OptionTwo}}
+</label><br />
+<label>
+    <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionThree">
+    {{currentQuestion.OptionThree}}
+</label><br />
+<label>
+    <input type="radio" ng-model="selectedOption" ng-value="currentQuestion.OptionFour">
+    {{currentQuestion.OptionFour}}
+</label><br />
+<button ng-click="submitAnswer()">Submit</button>
+<button ng-click="passQuestion(currentQuestion)">Pass</button>
