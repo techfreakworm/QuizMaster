@@ -9,11 +9,13 @@
     //FUNCTIONS
     //QUESTION FUNCTIONS
     $scope.addQuestion = function () { //Unhide add question menu
+        $scope.isQuestionEditVisible = false;
         $scope.isQuestionVisible = true;
         $scope.isQuestionAddVisible = true;
     };
 
     $scope.editQuestion = function (index) { //Unhide edit question menu
+        $scope.isQuestionAddVisible = false;
         $scope.isQuestionVisible = true;
         $scope.isQuestionEditVisible = true;
         $scope.editQuestion = $scope.questions[index];

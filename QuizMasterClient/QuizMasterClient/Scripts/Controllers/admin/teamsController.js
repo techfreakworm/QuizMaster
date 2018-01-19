@@ -8,11 +8,13 @@
     //FUNCTIONS
     //TEAM FUNCTIONS
     $scope.addTeam = function () { //Unhide add team menu
+        $scope.isTeamEditVisible = false;
         $scope.isTeamVisible = true;
         $scope.isTeamAddVisible = true;
     };
 
     $scope.editTeam = function (index) { //Unhide edit team menu
+        $scope.isTeamAddVisible = false;
         $scope.isTeamVisible = true;
         $scope.isTeamEditVisible = true;
         $scope.editTeam = $scope.teams[index];

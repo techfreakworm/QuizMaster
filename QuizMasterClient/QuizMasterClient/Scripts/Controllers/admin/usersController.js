@@ -20,11 +20,13 @@
 
     //ADMIN FUNCTIONS
     $scope.addAdminUser = function () { //Unhide add admin menu
+        $scope.isAdminEditVisible = false;
         $scope.isAdminVisible = true;
         $scope.isAdminAddVisible = true;
     };
 
-    $scope.editAdminUser = function (index) { //Unhide edit presenter menu
+    $scope.editAdminUser = function (index) { //Unhide edit admin menu
+        $scope.isAdminAddVisible = false;
         $scope.isAdminVisible = true;
         $scope.isAdminEditVisible = true;
         $scope.editAdmin = $scope.adminUsers[index];
@@ -126,11 +128,13 @@
 
     //PRESENTER FUNCTIONS
     $scope.addPresenterUser = function () {//Unhide add presenter menu
+        $scope.isPresenterEditVisible = false;
         $scope.isPresenterVisible = true;
         $scope.isPresenterAddVisible = true;
     };
 
     $scope.editPresenterUser = function (index) {  //Unhide edit presenter menu
+        $scope.isPresenterAddVisible = false;
         $scope.isPresenterVisible = true;
         $scope.isPresenterEditVisible = true;
         $scope.editPresenter = $scope.presenterUsers[index];

@@ -2,6 +2,7 @@
 
     //GLOBALS
     var teamIndex = 0;
+    var teamIndexPassed;
     var isPassed = 0;
     var teams;
     
@@ -18,9 +19,7 @@
             $scope.selectedOption = $scope.currentQuestion.OptionOne;
             if (successResponse.data == "")
                 alert("No questions left, QUIZ OVER");
-            else
-                alert("Random question generated.");
-            isPassed = 0;
+            $scope.isPassed = 0;
         }, function (errorResponse) {
             alert("Cannot fetch question from server!");
         });
@@ -36,7 +35,7 @@
         $http.post("http://localhost:50827/api/team/get", $cookies.getObject('user'), config).then(function (successResponse) {
             teams = successResponse.data;
             $scope.currentTeam = teams[teamIndex];
-            alert("Team details retreival completed!");
+            //alert("Team details retreival completed!");
         }, function (errorResponse) {
             alert("Cannot fetch team details!");
         });
@@ -68,8 +67,20 @@
     };
 
     $scope.passQuestion = function (passedQuestionDetails) { ////LOGIC: Pass question to another team
+        
+        if (isPassed != 1) {
+            teamIndexPassed = teamIndex;
+        }
         isPassed = 1;
-        changeTeam();
+        teamIndexPassed++;
+        if (teamIndexPassed > teams.length - 1) {
+            $scope.getQuestion();
+            teamIndex++;
+            $scope.currentTeam = teams[teamIndex];
+        }
+
+        else
+            $scope.currentTeam = teams[teamIndexPassed];
     };
 
     function changeTeam() { ////LOGIC: Change team 
