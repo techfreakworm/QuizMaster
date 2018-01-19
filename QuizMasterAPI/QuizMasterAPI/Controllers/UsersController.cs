@@ -22,6 +22,7 @@ namespace QuizMasterAPI.Controllers
         private QuizMasterDbContext db = new QuizMasterDbContext();
 
         // GET: api/Users
+        // Returns users who are admin
         [HttpPost]
         [Route("getadmin")]
         public IQueryable<User> GetAdmin(User currentUser)
@@ -39,7 +40,7 @@ namespace QuizMasterAPI.Controllers
             else
                 return null;
         }
-
+        // Returns users who are presenter
         [HttpPost]
         [Route("getpresenter")]
         public IQueryable<User> GetPresenter(User currentUser)
@@ -56,7 +57,7 @@ namespace QuizMasterAPI.Controllers
             else
                 return null;
         }
-
+        //get a user by its id
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         [HttpPost]
@@ -81,6 +82,7 @@ namespace QuizMasterAPI.Controllers
 
             return Ok(user);
         }
+        //api for login
         [Route("login")]
         public IHttpActionResult Login(User user)
         {
@@ -103,7 +105,7 @@ namespace QuizMasterAPI.Controllers
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
 
         }
-
+        //update user
         // PUT: api/Users/5
         [Route("{id}")]
         [HttpPut]
@@ -157,7 +159,7 @@ namespace QuizMasterAPI.Controllers
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "User Updated"));
         }
-
+        //add a new user
         // POST: api/Users
         [Route("")]
         [ResponseType(typeof(User))]
@@ -197,7 +199,7 @@ namespace QuizMasterAPI.Controllers
             }
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New User Added"));
         }
-
+        //delete user
         // DELETE: api/Users/5
         [Route("{id}")]
         [ResponseType(typeof(User))]

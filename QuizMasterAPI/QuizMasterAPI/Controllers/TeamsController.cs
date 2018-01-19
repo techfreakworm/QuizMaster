@@ -18,7 +18,7 @@ namespace QuizMasterAPI.Controllers
     public class TeamsController : ApiController
     {
         private QuizMasterDbContext db = new QuizMasterDbContext();
-
+        // returns all the teams
         // GET: api/Teams
         [HttpPost]
         [Route("get")]
@@ -35,7 +35,7 @@ namespace QuizMasterAPI.Controllers
             }
             return db.Teams;
         }
-
+        // gets a team by id
         // GET: api/Teams/5
         [HttpPost]
         [Route("get/{id}")]
@@ -59,7 +59,7 @@ namespace QuizMasterAPI.Controllers
 
             return Ok(team);
         }
-
+        // update a team
         // PUT: api/Teams/5
         [Route("{id}")]
         [ResponseType(typeof(void))]
@@ -111,7 +111,7 @@ namespace QuizMasterAPI.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        // add new team
         // POST: api/Teams
         [Route("")]
         [ResponseType(typeof(Team))]
@@ -153,7 +153,7 @@ namespace QuizMasterAPI.Controllers
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Team Added"));
         
         }
-
+        // delete a team
         // DELETE: api/Teams/5
         [Route("{id}")]
         [ResponseType(typeof(Team))]

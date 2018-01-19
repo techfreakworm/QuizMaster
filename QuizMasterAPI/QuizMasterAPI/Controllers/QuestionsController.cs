@@ -18,11 +18,12 @@ namespace QuizMasterAPI.Controllers
     [RoutePrefix("api/question")]
     public class QuestionsController : ApiController
     {
+        //global varibles for question controller
         Random rnd = new Random();
-        private static List<int> ignoreRand = new List<int> { };
-        private static int counter = 0;
+        private static List<int> ignoreRand = new List<int> { }; //list that stores already generated random numbers
+        private static int counter = 0;                         // keeps count of random questions generated
         private QuizMasterDbContext db = new QuizMasterDbContext();
-       
+       //returns all the questions
         [Route("get")]
         // GET: api/Questions
         [HttpPost]
@@ -39,7 +40,7 @@ namespace QuizMasterAPI.Controllers
             }
             return db.Questions;
         }
-
+        // return a question by id
         // GET: api/Questions/5
         [Route("get/{id}")]
         [HttpPost]
@@ -64,7 +65,7 @@ namespace QuizMasterAPI.Controllers
 
             return Ok(question);
         }
-
+        //update question
         // PUT: api/Questions/5
         [Route("{id}")]
         [ResponseType(typeof(void))]
@@ -117,7 +118,7 @@ namespace QuizMasterAPI.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        //add new question
         // POST: api/Questions
         [Route("")]
         [ResponseType(typeof(Question))]
@@ -158,7 +159,7 @@ namespace QuizMasterAPI.Controllers
 
             return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.OK, "New Question Added"));
         }
-
+        // delete a question
         // DELETE: api/Questions/5
         [Route("{id}")]
         [ResponseType(typeof(Question))]
@@ -211,6 +212,7 @@ namespace QuizMasterAPI.Controllers
         {
             return db.Questions.Count(e => e.QId == id) > 0;
         }
+        // returns a random question everytime
         [HttpPost]
         [Route("random")]
         [ResponseType(typeof(Question))]
@@ -239,6 +241,7 @@ namespace QuizMasterAPI.Controllers
             counter++;
             return Ok(question);
         }
+        //check weather the answer is correct or not and updates score accordingly
         [HttpPost]
         [Route("check")]
         public IHttpActionResult CheckAnswer(JObject jdata)
