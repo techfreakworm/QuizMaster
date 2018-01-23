@@ -1,0 +1,2 @@
+E:\QuizMaster\QuizMasterAPI\QuizMasterAPI.Tests\obj\Debug\QuizMasterAPI.Tests.csprojResolveAssemblyReference.cache
+E:\QuizMaster\QuizMasterAPI\QuizMasterAPI.Tests\obj\Debug\QuizMasterAPI.Tests.csproj.CoreCompileInputs.cache

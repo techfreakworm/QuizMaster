@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,30 +11,40 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
+using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using QuizMasterAPI;
+using QuizMasterAPI.Filters;
 using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    
+
     [RoutePrefix("api/user")]
     public class UsersController : ApiController
     {
+       
         private QuizMasterDbContext db = new QuizMasterDbContext();
-
         // GET: api/Users
         // Returns users who are admin
         [HttpPost]
+        [JwtAuthentication]
         [Route("getadmin")]
-        public IQueryable<User> GetAdmin(User currentUser)
+        public IQueryable<User> GetAdmin()
         {
-            
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token =message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return null;
             }
-            if ((foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (foundUser.UserType.Equals("admin"))
             {
                 return db.User.Where(a=> a.UserType.Equals("admin"));
             }
@@ -42,15 +53,19 @@ namespace QuizMasterAPI.Controllers
         }
         // Returns users who are presenter
         [HttpPost]
+        [JwtAuthentication]
         [Route("getpresenter")]
-        public IQueryable<User> GetPresenter(User currentUser)
+        public IQueryable<User> GetPresenter()
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return null;
             }
-            if ((foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (foundUser.UserType.Equals("admin"))
             {
                 return db.User.Where(a => a.UserType.Equals("presenter"));
             }
@@ -62,14 +77,18 @@ namespace QuizMasterAPI.Controllers
         [ResponseType(typeof(User))]
         [HttpPost]
         [Route("get/{id}")]
-        public IHttpActionResult GetUser(int id,User currentUser)
+        [JwtAuthentication]
+        public IHttpActionResult GetUser(int id)
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not authoriZed"));
             }
@@ -83,6 +102,7 @@ namespace QuizMasterAPI.Controllers
             return Ok(user);
         }
         //api for login
+        [AllowAnonymous]
         [Route("login")]
         public IHttpActionResult Login(User user)
         {
@@ -96,10 +116,14 @@ namespace QuizMasterAPI.Controllers
                 if (foundUser.UserType == "admin")
                 {
                     //Return admin
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "admin"));
-                }                 
+                    var token = JwtManager.GenerateToken(foundUser.UserName);
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, token));
+                }
                 else
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "presenter"));
+                {
+                    var token = JwtManager.GenerateToken(foundUser.UserName);
+                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, token));
+                }
             }
             else // When user found but password incorrect
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
@@ -109,18 +133,20 @@ namespace QuizMasterAPI.Controllers
         // PUT: api/Users/5
         [Route("{id}")]
         [HttpPut]
+        [JwtAuthentication]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id,JObject jdata)
+        public IHttpActionResult PutUser(int id,User user)
         {
-            dynamic JsonData = jdata;
-            User currentUser = JsonData.currentUser.ToObject<User>();
-            User user = JsonData.user.ToObject<User>();
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not authoriZed"));
             }
@@ -161,19 +187,22 @@ namespace QuizMasterAPI.Controllers
         }
         //add a new user
         // POST: api/Users
+
         [Route("")]
         [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(JObject jdata)
+        [JwtAuthentication]
+        public IHttpActionResult PostUser(User user)
         {
-            dynamic JsonData = jdata;
-            User currentUser = JsonData.currentUser.ToObject<User>();
-            User user = JsonData.user.ToObject<User>();
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized")); ; 
             }
@@ -204,14 +233,18 @@ namespace QuizMasterAPI.Controllers
         [Route("{id}")]
         [ResponseType(typeof(User))]
         [HttpDelete]
-        public IHttpActionResult DeleteUser(int id, User currentUser)
+        [JwtAuthentication]
+        public IHttpActionResult DeleteUser(int id)
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return null; ;
             }

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace QuizMasterAPI
 {
-    public class QuizMasterDbContext :DbContext
+    public class QuizMasterDbContext :DbContext,IDbContext
     {
         public QuizMasterDbContext()
            : base("QuizMasterDbConnection")
@@ -17,6 +17,19 @@ namespace QuizMasterAPI
         public DbSet<User> User { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public void MarkAsModified(Question item)
+        {
+            Entry(item).State = EntityState.Modified;
+        }
+        public void MarkAsModified(User item)
+        {
+            Entry(item).State = EntityState.Modified;
+        }
+        public void MarkAsModified(Team item)
+        {
+            Entry(item).State = EntityState.Modified;
+        }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

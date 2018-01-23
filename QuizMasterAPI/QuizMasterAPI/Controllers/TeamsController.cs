@@ -10,10 +10,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Newtonsoft.Json.Linq;
 using QuizMasterAPI;
+using QuizMasterAPI.Filters;
 using QuizMasterAPI.Models;
 
 namespace QuizMasterAPI.Controllers
 {
+    [JwtAuthentication]
     [RoutePrefix("api/team")]
     public class TeamsController : ApiController
     {
@@ -22,14 +24,17 @@ namespace QuizMasterAPI.Controllers
         // GET: api/Teams
         [HttpPost]
         [Route("get")]
-        public IQueryable<Team> GetTeams(User currentUser)
+        public IQueryable<Team> GetTeams()
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return null;
             }
-            if (!((foundUser.UserType.Equals("admin") || (foundUser.UserType.Equals("presenter"))) && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!(foundUser.UserType.Equals("admin") || foundUser.UserType.Equals("presenter")))
             {
                 return null;
             }
@@ -40,14 +45,17 @@ namespace QuizMasterAPI.Controllers
         [HttpPost]
         [Route("get/{id}")]
         [ResponseType(typeof(Team))]
-        public IHttpActionResult GetTeam(int id,User currentUser)
+        public IHttpActionResult GetTeam(int id)
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -63,17 +71,17 @@ namespace QuizMasterAPI.Controllers
         // PUT: api/Teams/5
         [Route("{id}")]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTeam(int id, JObject jdata)
+        public IHttpActionResult PutTeam(int id, Team team)
         {
-            dynamic JsonData = jdata;
-            User currentUser = JsonData.currentUser.ToObject<User>();
-            Team team = JsonData.team.ToObject<Team>();
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault(); ;
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -115,17 +123,17 @@ namespace QuizMasterAPI.Controllers
         // POST: api/Teams
         [Route("")]
         [ResponseType(typeof(Team))]
-        public IHttpActionResult PostTeam(JObject jdata)
+        public IHttpActionResult PostTeam(Team team)
         {
-            dynamic JsonData = jdata;
-            User currentUser = JsonData.currentUser.ToObject<User>();
-            Team team = JsonData.team.ToObject<Team>();
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }
@@ -157,14 +165,17 @@ namespace QuizMasterAPI.Controllers
         // DELETE: api/Teams/5
         [Route("{id}")]
         [ResponseType(typeof(Team))]
-        public IHttpActionResult DeleteTeam(int id,User currentUser)
+        public IHttpActionResult DeleteTeam(int id)
         {
-            User foundUser = db.User.Where(a => a.UserName.Equals(currentUser.UserName)).FirstOrDefault();
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)
             {
                 return NotFound();
             }
-            if (!(foundUser.UserType.Equals("admin") && currentUser.UserPass.Equals(foundUser.UserPass)))
+            if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
             }

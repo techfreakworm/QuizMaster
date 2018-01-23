@@ -11,6 +11,11 @@ namespace QuizMasterAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+
+            config.Filters.Add(new AuthorizeAttribute());
+
+
+            // Web API configuration and services
             var cors = new EnableCorsAttribute("http://localhost:65331", "*", "*");
             config.EnableCors(cors);
 

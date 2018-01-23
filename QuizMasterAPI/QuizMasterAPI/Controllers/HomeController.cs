@@ -13,5 +13,6 @@ namespace QuizMasterAPI.Controllers
         {
             return View();
         }
+
     }
 }
