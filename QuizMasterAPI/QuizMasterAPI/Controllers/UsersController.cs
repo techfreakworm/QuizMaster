@@ -27,7 +27,7 @@ namespace QuizMasterAPI.Controllers
     [RoutePrefix("api/user")]
     public class UsersController : ApiController
     {
-       
+        public UsersController() { }
         private QuizMasterDbContext db = new QuizMasterDbContext();
         // GET: api/Users
         // Returns users who are admin
@@ -47,6 +47,26 @@ namespace QuizMasterAPI.Controllers
             if (foundUser.UserType.Equals("admin"))
             {
                 return db.User.Where(a=> a.UserType.Equals("admin"));
+            }
+            else
+                return null;
+        }
+        [HttpPost]
+        [JwtAuthentication]
+        [Route("getuser")]
+        public IHttpActionResult GeCurrenttUser()
+        {
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound, "No User Found")); ;
+            }
+            if ((foundUser.UserType.Equals("admin")|| foundUser.UserType.Equals("presenter")))
+            {
+                return Ok(foundUser);
             }
             else
                 return null;
@@ -112,18 +132,16 @@ namespace QuizMasterAPI.Controllers
                 return NotFound();
             }
             else if (foundUser != null && user.UserPass.Equals(foundUser.UserPass))
-            {
-                if (foundUser.UserType == "admin")
-                {
+            {   
                     //Return admin
-                    var token = JwtManager.GenerateToken(foundUser.UserName);
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, token));
-                }
-                else
-                {
-                    var token = JwtManager.GenerateToken(foundUser.UserName);
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, token));
-                }
+                    var newToken = JwtManager.GenerateToken(foundUser.UserName);
+                var data = new {
+                token = newToken,
+                UserType= foundUser.UserType.ToString()
+
+                };
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, data));
+                                
             }
             else // When user found but password incorrect
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));

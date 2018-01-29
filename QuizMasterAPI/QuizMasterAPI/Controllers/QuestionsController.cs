@@ -30,12 +30,10 @@ namespace QuizMasterAPI.Controllers
         {
             db = context;
         }
-
-
         //returns all the questions
         [Route("get")]
         // GET: api/Questions
-        [HttpPost]
+        [HttpPost, HttpGet]
         public IQueryable<Question> GetQuestions()
         {
             HttpRequestMessage message = this.Request;
@@ -55,7 +53,7 @@ namespace QuizMasterAPI.Controllers
         // return a question by id
         // GET: api/Questions/5
         [Route("get/{id}")]
-        [HttpPost]
+        [HttpPost, HttpGet]
         [ResponseType(typeof(Question))]
         public IHttpActionResult GetQuestion(int id)
         {
@@ -105,7 +103,7 @@ namespace QuizMasterAPI.Controllers
 
             if (id != question.QId)
             {
-                return BadRequest();
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Wrong Id"));
             }
 
             //db.Entry(question).State = EntityState.Modified;
@@ -137,10 +135,13 @@ namespace QuizMasterAPI.Controllers
         // POST: api/Questions
         [Route("")]
         [ResponseType(typeof(Question))]
-        public IHttpActionResult PostQuestion(Question question)
+        public IHttpActionResult PostQuestion(Question question,String token="abc")
         {
             HttpRequestMessage message = this.Request;
-            String token = message.Headers.Authorization.ToString().Substring(7);
+            if (token.Equals("abc"))
+            {
+                token = message.Headers.Authorization.ToString().Substring(7);
+            }
             String username = JwtManager.DecodeToken(token);
             User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
             if (foundUser == null)

@@ -13,7 +13,7 @@ namespace QuizMasterAPI.Tests
     {
         public TestDbContext()
         {
-            this.Questions = new TestQuestionDbSet();
+            Questions = new TestQuestionDbSet();
         }
 
         public DbSet<Question> Questions { get; set; }
@@ -28,14 +28,8 @@ namespace QuizMasterAPI.Tests
         public void MarkAsModified(Question item) { }
         public void Dispose() { }
 
-        public void MarkAsModified(User item)
-        {
-            
-        }
+        public void MarkAsModified(User item) {  }
 
-        public void MarkAsModified(Team item)
-        {
-            
-        }
+        public void MarkAsModified(Team item) { }
     }
 }

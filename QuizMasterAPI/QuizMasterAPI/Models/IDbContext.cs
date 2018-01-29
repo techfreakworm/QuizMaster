@@ -9,9 +9,9 @@ namespace QuizMasterAPI.Models
 {
     public interface IDbContext : IDisposable
     {
-        DbSet<Question> Questions { get; set; }
-        DbSet<User> User { get; set; }
-        DbSet<Team> Teams { get; set; }
+        DbSet<Question> Questions { get;  }
+        DbSet<User> User { get;  }
+        DbSet<Team> Teams { get;  }
         int SaveChanges();
         void MarkAsModified(Question item);
         void MarkAsModified(User item);

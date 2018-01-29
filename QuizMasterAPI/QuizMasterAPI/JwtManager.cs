@@ -14,7 +14,7 @@ namespace QuizMasterAPI
 
 
 
-        public static string GenerateToken(string username, int expireMinutes = 20)
+        public static string GenerateToken(string username, int expireMinutes = 60)
 
         {
 
