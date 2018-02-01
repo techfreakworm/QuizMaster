@@ -54,7 +54,7 @@ namespace QuizMasterAPI.Controllers
         [HttpPost]
         [JwtAuthentication]
         [Route("getuser")]
-        public IHttpActionResult GeCurrenttUser()
+        public IHttpActionResult GetCurrentUser()
         {
             HttpRequestMessage message = this.Request;
             String token = message.Headers.Authorization.ToString().Substring(7);
@@ -147,6 +147,34 @@ namespace QuizMasterAPI.Controllers
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous,"Password Incorrect"));
 
         }
+
+
+        [Route("verify")]
+        [JwtAuthentication]
+        [HttpGet]
+        public IHttpActionResult VerifyLogin()
+        {
+            HttpRequestMessage message = this.Request;
+            String token = message.Headers.Authorization.ToString().Substring(7);
+            String username = JwtManager.DecodeToken(token);
+            User foundUser = db.User.Where(a => a.UserName.Equals(username)).FirstOrDefault();
+            if (foundUser == null)
+            {
+                return NotFound();
+            }
+            else if (foundUser != null && foundUser.UserType.Equals("admin"))
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "admin"));
+            }
+            else if (foundUser != null && foundUser.UserType.Equals("presenter"))
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.Accepted, "presenter"));
+            }
+            else // When user found but password incorrect
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Ambiguous, "Password Incorrect"));
+
+        }
+
         //update user
         // PUT: api/Users/5
         [Route("{id}")]

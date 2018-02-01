@@ -20,8 +20,15 @@ loginApp.controller('loginPortalController', ['$scope', '$http', '$cookies', '$w
 
         $http.post('http://localhost:50827/api/user/login', userdata, config).then(function (successResponse) {
             $scope.isSubmitButtonDisabled = true;
-            $cookies.putObject('user', userdata);
-            if (successResponse.data == "admin") {
+            var currentUserData = {
+                'userName': $scope.email,
+                'userType': successResponse.data.UserType,
+                'token': successResponse.data.token
+            };
+            $cookies.putObject('currentUser', currentUserData );
+            // Pass authorization token with every request
+          //  $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.getObject('currentUser').token;
+            if ($cookies.getObject('currentUser').userType == "admin") {
                 $window.location.href = 'Views/admin/adminPortal.html';
             }
             else
@@ -34,15 +41,17 @@ loginApp.controller('loginPortalController', ['$scope', '$http', '$cookies', '$w
     }
 
     $scope.init = function () {
-        var userdata = $cookies.getObject('user');
+        var currentUser = $cookies.getObject('currentUser');
 
-        if (userdata != null) {
+        if (currentUser != null) {
             var config = {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + currentUser.token
                 }
             };
-            $http.post('http://localhost:50827/api/user/login', userdata, config).then(function (successResponse) {
+
+            $http.get('http://localhost:50827/api/user/verify', config).then(function (successResponse) {
                 if (successResponse.data == "admin") {
                     $window.location.href = 'Views/admin/adminPortal.html';
                 }
