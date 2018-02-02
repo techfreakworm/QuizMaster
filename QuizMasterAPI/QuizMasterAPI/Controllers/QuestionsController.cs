@@ -33,7 +33,7 @@ namespace QuizMasterAPI.Controllers
         //returns all the questions
         [Route("get")]
         // GET: api/Questions
-        [HttpPost, HttpGet]
+        [HttpGet]
         public IQueryable<Question> GetQuestions()
         {
             HttpRequestMessage message = this.Request;
@@ -53,7 +53,7 @@ namespace QuizMasterAPI.Controllers
         // return a question by id
         // GET: api/Questions/5
         [Route("get/{id}")]
-        [HttpPost, HttpGet]
+        [HttpGet]
         [ResponseType(typeof(Question))]
         public IHttpActionResult GetQuestion(int id)
         {
@@ -232,8 +232,9 @@ namespace QuizMasterAPI.Controllers
             return db.Questions.Count(e => e.QId == id) > 0;
         }
         // returns a random question everytime
-        [HttpPost]
+        
         [Route("random")]
+        [HttpGet]
         [ResponseType(typeof(Question))]
         public IHttpActionResult RandomQuestion()
         {

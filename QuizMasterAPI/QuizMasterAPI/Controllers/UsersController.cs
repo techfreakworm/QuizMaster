@@ -31,7 +31,7 @@ namespace QuizMasterAPI.Controllers
         private QuizMasterDbContext db = new QuizMasterDbContext();
         // GET: api/Users
         // Returns users who are admin
-        [HttpPost]
+        [HttpGet]
         [JwtAuthentication]
         [Route("getadmin")]
         public IQueryable<User> GetAdmin()
@@ -51,7 +51,7 @@ namespace QuizMasterAPI.Controllers
             else
                 return null;
         }
-        [HttpPost]
+        [HttpGet]
         [JwtAuthentication]
         [Route("getuser")]
         public IHttpActionResult GetCurrentUser()
@@ -66,13 +66,13 @@ namespace QuizMasterAPI.Controllers
             }
             if ((foundUser.UserType.Equals("admin")|| foundUser.UserType.Equals("presenter")))
             {
-                return Ok(foundUser);
+                return Ok(foundUser.UserName);
             }
             else
                 return null;
         }
         // Returns users who are presenter
-        [HttpPost]
+        [HttpGet]
         [JwtAuthentication]
         [Route("getpresenter")]
         public IQueryable<User> GetPresenter()
@@ -95,7 +95,7 @@ namespace QuizMasterAPI.Controllers
         //get a user by its id
         // GET: api/Users/5
         [ResponseType(typeof(User))]
-        [HttpPost]
+        [HttpGet]
         [Route("get/{id}")]
         [JwtAuthentication]
         public IHttpActionResult GetUser(int id)
@@ -235,6 +235,7 @@ namespace QuizMasterAPI.Controllers
         // POST: api/Users
 
         [Route("")]
+        [HttpPost]
         [ResponseType(typeof(User))]
         [JwtAuthentication]
         public IHttpActionResult PostUser(User user)

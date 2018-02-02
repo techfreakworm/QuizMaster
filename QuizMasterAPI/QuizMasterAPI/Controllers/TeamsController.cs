@@ -22,8 +22,9 @@ namespace QuizMasterAPI.Controllers
         private QuizMasterDbContext db = new QuizMasterDbContext();
         // returns all the teams
         // GET: api/Teams
-        [HttpPost]
+        
         [Route("get")]
+        [HttpGet]
         public IQueryable<Team> GetTeams()
         {
             HttpRequestMessage message = this.Request;
@@ -42,7 +43,7 @@ namespace QuizMasterAPI.Controllers
         }
         // gets a team by id
         // GET: api/Teams/5
-        [HttpPost]
+        [HttpGet]
         [Route("get/{id}")]
         [ResponseType(typeof(Team))]
         public IHttpActionResult GetTeam(int id)
@@ -69,6 +70,7 @@ namespace QuizMasterAPI.Controllers
         }
         // update a team
         // PUT: api/Teams/5
+
         [Route("{id}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTeam(int id, Team team)
@@ -123,6 +125,7 @@ namespace QuizMasterAPI.Controllers
         // POST: api/Teams
         [Route("")]
         [ResponseType(typeof(Team))]
+        [HttpPost]
         public IHttpActionResult PostTeam(Team team)
         {
             HttpRequestMessage message = this.Request;
@@ -136,10 +139,6 @@ namespace QuizMasterAPI.Controllers
             if (!foundUser.UserType.Equals("admin"))
             {
                 return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Not Authorized"));
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
             }
 
             try
