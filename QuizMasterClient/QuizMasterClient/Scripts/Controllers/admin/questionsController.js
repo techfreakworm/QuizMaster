@@ -23,9 +23,9 @@
 
     $scope.deleteQuestion = function (index) { //delete question
         var config = {
-            data: $cookies.getObject('user'),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
@@ -40,11 +40,12 @@
     $scope.initQuestion = function () { //initialize admin table
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/question/get", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/question/get", config).then(function (successResponse) {
             $scope.questions = successResponse.data;
             //console.log(adminDetails);
         }, function (errorResponse) {
@@ -55,13 +56,12 @@
     $scope.saveQuestionEdit = function () {//Edit a question
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            question: {
                 'QId': $scope.editQuestion.QId,
                 'Ques': $scope.editQuestion.Ques,
                 'OptionOne': $scope.editQuestion.OptionOne,
@@ -69,10 +69,7 @@
                 'OptionThree': $scope.editQuestion.OptionThree,
                 'OptionFour': $scope.editQuestion.OptionFour,
                 'Answer': $scope.editQuestion.Answer
-            }
         };
-
-        console.log(data);
 
         var uri = 'http://localhost:50827/api/question/' + $scope.editQuestion.QId;
 
@@ -91,13 +88,12 @@
     $scope.saveQuestionAdd = function () {//Add an admin user
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            question: {
                 'QId': $scope.addQuestion.QId,
                 'Ques': $scope.addQuestion.Ques,
                 'OptionOne': $scope.addQuestion.OptionOne,
@@ -105,7 +101,6 @@
                 'OptionThree': $scope.addQuestion.OptionThree,
                 'OptionFour': $scope.addQuestion.OptionFour,
                 'Answer': $scope.addQuestion.Answer
-            }
         };
 
         $http.post('http://localhost:50827/api/question', data, config).then(function (successResponse) {

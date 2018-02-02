@@ -5,8 +5,8 @@
     $scope.init = function () {
 
         $scope.showIfAuthorized = false;
-        var userdata = $cookies.getObject('user');
-        if (userdata == null) {
+        var currentUser = $cookies.getObject('currentUser');
+        if (currentUser == null) {
             $scope.content = 'You are not an authorized user but this will not show';
         }
         else {
@@ -14,11 +14,10 @@
             $scope.showIfAuthorized = true;
         }
             
-        console.log(userdata);
     }
 
     $scope.logOut = function () {
-        $cookies.remove('user', { path: '/' });
+        $cookies.remove('currentUser', { path: '/' });
         $window.location.href = "../../index.html";
     };
 }]);

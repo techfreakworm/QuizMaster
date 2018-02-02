@@ -24,7 +24,8 @@
         var config = {
             data: $cookies.getObject('user'),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
@@ -39,11 +40,12 @@
     $scope.initTeam = function () { //initialize team table
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/team/get", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/team/get", config).then(function (successResponse) {
             $scope.teams = successResponse.data;
         }, function (errorResponse) {
             console.log("Cannot fetch all admin user details");
@@ -53,20 +55,17 @@
     $scope.saveTeamEdit = function () {//Edit a team
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            team: {
                 'TeamId': $scope.editTeam.TeamId,
                 'TeamName': $scope.editTeam.TeamName,
                 'TeamMembers': $scope.editTeam.TeamMembers
-            }
         };
 
-        console.log(data);
 
         var uri = 'http://localhost:50827/api/team/' + $scope.editTeam.TeamId;
 
@@ -85,16 +84,14 @@
     $scope.saveTeamAdd = function () {//Add a team
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            team: {
                 'TeamName': $scope.addTeam.TeamName,
                 'TeamMembers': $scope.addTeam.TeamMembers
-            }
         };
 
         $http.post('http://localhost:50827/api/team', data, config).then(function (successResponse) {

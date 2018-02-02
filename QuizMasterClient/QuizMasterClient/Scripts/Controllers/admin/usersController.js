@@ -36,7 +36,8 @@
         var config = {
             data: $cookies.getObject('user'),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
@@ -51,11 +52,12 @@
     $scope.initAdmin = function () { //initialize admin table
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/user/getadmin", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/user/getadmin", config).then(function (successResponse) {
             $scope.adminUsers = successResponse.data;
             //console.log(adminDetails);
         }, function (errorResponse) {
@@ -66,21 +68,20 @@
     $scope.saveAdminEdit = function () {//Edit an admin user
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            user: {
                 'UserId': $scope.editAdmin.UserId,
                 'UserType': 'admin',
                 'UserName': $scope.editAdmin.UserName,
                 'UserPass': $scope.editAdmin.UserPass
-            }
+            
         };
 
-        console.log(data);
+       // console.log(data);
 
         var uri = 'http://localhost:50827/api/user/' + $scope.editAdmin.UserId;
 
@@ -99,17 +100,16 @@
     $scope.saveAdminAdd = function () {//Add an admin user
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            user: {
                 'UserName': $scope.addAdmin.UserName,
                 'UserType' : 'admin',
                 'UserPass': $scope.addAdmin.UserPass
-            }
+            
         };
 
         $http.post('http://localhost:50827/api/user', data, config).then(function (successResponse) {
@@ -144,7 +144,8 @@
         var config = {
             data: $cookies.getObject('user'),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
@@ -159,13 +160,14 @@
     $scope.initPresenter = function () { //Initialize presenter table
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/user/getpresenter", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/user/getpresenter", config).then(function (successResponse) {
             $scope.presenterUsers = successResponse.data;
-            console.log($scope.presenterUsers);
+           // console.log($scope.presenterUsers);
         }, function (errorResponse) {
             console.log("Cannot fetch all presenter user details");
         });
@@ -174,18 +176,17 @@
     $scope.savePresenterEdit = function () { //Save presenter edits
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
-            user: {
                 'UserId': $scope.editPresenter.UserId,
                 'UserType': 'admin',
                 'UserName': $scope.editPresenter.UserName,
                 'UserPass': $scope.editPresenter.UserPass
-            }
+            
         };
 
         console.log(data);

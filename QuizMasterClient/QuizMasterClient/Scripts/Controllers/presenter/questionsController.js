@@ -10,11 +10,12 @@
     $scope.getQuestion = function () { //Gets a random question from server
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/question/random", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/question/random", config).then(function (successResponse) {
             $scope.currentQuestion = successResponse.data;
             $scope.selectedOption = $scope.currentQuestion.OptionOne;
             if (successResponse.data == "")
@@ -28,11 +29,12 @@
     $scope.initTeam = function () { //Initialize team info onload tab
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
-        $http.post("http://localhost:50827/api/team/get", $cookies.getObject('user'), config).then(function (successResponse) {
+        $http.get("http://localhost:50827/api/team/get", config).then(function (successResponse) {
             teams = successResponse.data;
             $scope.currentTeam = teams[teamIndex];
             //alert("Team details retreival completed!");
@@ -44,12 +46,12 @@
     $scope.submitAnswer = function () { //Submit and check the answer to server
         var config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + $cookies.getObject('currentUser').token
             }
         };
 
         var data = {
-            currentUser: $cookies.getObject('user'),
             qId: $scope.currentQuestion.QId,
             tId: $scope.currentTeam.TeamId,
             answer: $scope.selectedOption,
